@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight, Check, Sparkles, ShieldCheck } from 'lucide-react';
 
 interface ProcessTimelineProps {
-  onStartProject: () => void;
+  onStartProject: (packageType?: 'landing' | 'mvp' | 'full-app') => void;
 }
 
 export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject }) => {
@@ -23,7 +23,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
             How We Get You Live in Record Time
           </h2>
           <p className="mt-4 text-base text-neutral-400 leading-relaxed">
-            Whether you choose a ready-to-deploy template or a custom full-stack MVP, our process removes friction so you can focus on getting users, patients, and revenue.
+            Whether you need a high-converting landing page, a rapid startup MVP, or a full scalable web application, our process removes friction so you can focus on revenue.
           </p>
         </div>
 
@@ -33,9 +33,9 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
           <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
             <div>
               <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 01</div>
-              <h4 className="text-base font-bold text-neutral-100 font-display">Choose or Scope</h4>
+              <h4 className="text-base font-bold text-neutral-100 font-display">Select Your Package</h4>
               <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                Browse our live examples and select a turnkey template, or lock in your custom MVP parameters via our scope calculator.
+                Choose between a fast Landing Page, a 14-day Startup MVP, or a Full Scalable Web Application with custom scope.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
@@ -46,9 +46,9 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
           <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
             <div>
               <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 02</div>
-              <h4 className="text-base font-bold text-neutral-100 font-display">5-Minute Onboarding</h4>
+              <h4 className="text-base font-bold text-neutral-100 font-display">Quick Onboarding Intake</h4>
               <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                Submit your brand logos, copywriting, credentials, or schedule a 25-minute technical discovery call with our lead architect.
+                Share your brand assets, logo, copywriting, or book a 25-minute technical discovery call with our lead engineer.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
@@ -61,7 +61,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
               <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 03</div>
               <h4 className="text-base font-bold text-neutral-100 font-display">Senior Engineering</h4>
               <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                We adapt the codebase, hook up your database, connect Stripe payments, configure SEO, and test responsiveness on real devices.
+                We build the UI, database, authentication, storage, and APIs. Tested across desktop and mobile devices.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
@@ -74,7 +74,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
               <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 04</div>
               <h4 className="text-base font-bold text-neutral-100 font-display">Launch & 100% Ownership</h4>
               <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                We connect your domain with SSL, transfer the clean GitHub repository to your team, and provide 30 days of post-launch support.
+                We connect your custom domain with SSL, transfer the clean GitHub repository to you, and support your launch.
               </p>
             </div>
             <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
@@ -88,151 +88,176 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
         <div id="pricing" className="mt-20 pt-16 border-t border-neutral-800">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display">
-              Simple, Predictable Engagement Tiers
+              Clear, Predictable Investment Tiers
             </h3>
             <p className="mt-2 text-xs sm:text-sm text-neutral-400">
-              No hourly overruns, no surprise retainers. Choose the model that matches your current momentum.
+              Guaranteed fixed quotes with zero surprise retainers. Tailored for clinics, startups, and scalable web apps.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            {/* Tier 1: Raw Codebase */}
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/30 p-6 flex flex-col justify-between">
+            {/* Tier 1: Landing Page */}
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
               <div>
-                <div className="text-xs font-semibold text-neutral-400">For Developers & Teams</div>
-                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">Raw Codebase License</h4>
+                <div className="text-xs font-semibold text-neutral-400">Clinics, Cabinets & Waitlists</div>
+                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">High-Converting Landing Page</h4>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-neutral-100 font-display tabular-nums">$179–$299</span>
-                  <span className="text-xs text-neutral-400">one-time</span>
+                  <span className="text-3xl font-bold text-neutral-100 font-display tabular-nums">$590</span>
+                  <span className="text-xs text-neutral-400">flat fee · 48–72h</span>
                 </div>
-                <p className="mt-3 text-xs text-neutral-400">
-                  Instant access to the complete Next.js 15 repository with TypeScript, Tailwind styling, and components.
+                <p className="mt-3 text-xs text-neutral-400 leading-relaxed">
+                  Fast, ultra-clean web presence designed to turn visitors into booked patients, clients, or early adopters.
                 </p>
 
-                <ul className="mt-6 space-y-2 text-xs text-neutral-300">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Full source code repository</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Commercial unlimited license</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Setup documentation & README</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-neutral-500">
-                    <span>Self-hosted & self-customized</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mt-8 pt-4 border-t border-neutral-800">
-                <button
-                  onClick={onStartProject}
-                  className="w-full rounded-lg border border-neutral-700 bg-neutral-900 py-2.5 text-xs font-semibold text-neutral-200 hover:border-neutral-500 hover:text-white transition-colors"
-                >
-                  Browse Codebases
-                </button>
-              </div>
-            </div>
-
-            {/* Tier 2: Turnkey Customized (Most Popular) */}
-            <div className="rounded-xl border border-amber-400/80 bg-neutral-900/80 p-6 flex flex-col justify-between relative shadow-lg shadow-amber-400/5">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded bg-amber-400 px-2.5 py-0.5 text-[10px] font-bold text-neutral-950 uppercase tracking-wide">
-                Most Popular
-              </div>
-
-              <div>
-                <div className="text-xs font-semibold text-amber-400">Turnkey Productized Service</div>
-                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">Customized Template</h4>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-white font-display tabular-nums">$650–$950</span>
-                  <span className="text-xs text-neutral-400">flat fee</span>
-                </div>
-                <p className="mt-3 text-xs text-neutral-400">
-                  We customize the template with your branding, copy, and doctor credentials, then launch it on your domain in 48-72h.
-                </p>
-
-                <ul className="mt-6 space-y-2 text-xs text-neutral-200">
+                <ul className="mt-6 space-y-2.5 text-xs text-neutral-300">
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-amber-400" />
                     <span>Delivered live in 48–72 hours</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Your exact logo, copy & photography</span>
+                    <span>Your exact logo, branding & copy</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Custom domain & SSL deployment</span>
+                    <span>Appointment booking or lead form connected</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Booking or contact form connected</span>
+                    <span>Custom domain & automated SSL certificate</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>14 days complimentary tweaks</span>
+                    <span>Mobile responsive & local SEO setup</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>14 days post-launch revisions</span>
                   </li>
                 </ul>
               </div>
 
               <div className="mt-8 pt-4 border-t border-neutral-800">
                 <button
-                  onClick={onStartProject}
-                  className="w-full rounded-lg bg-amber-400 py-2.5 text-xs font-bold text-neutral-950 hover:bg-amber-300 transition-all shadow-md shadow-amber-400/20"
+                  onClick={() => onStartProject('landing')}
+                  className="w-full rounded-lg border border-neutral-700 bg-neutral-900 py-2.5 text-xs font-semibold text-neutral-200 hover:border-neutral-500 hover:text-white transition-colors"
                 >
-                  Order Turnkey Website
+                  Order Landing Page
                 </button>
               </div>
             </div>
 
-            {/* Tier 3: Custom MVP Sprint */}
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/30 p-6 flex flex-col justify-between">
+            {/* Tier 2: Startup MVP (Our Primary Target) */}
+            <div className="rounded-xl border border-amber-400/80 bg-neutral-900/80 p-6 flex flex-col justify-between relative shadow-lg shadow-amber-400/5">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded bg-amber-400 px-2.5 py-0.5 text-[10px] font-bold text-neutral-950 uppercase tracking-wide">
+                Primary Specialty
+              </div>
+
               <div>
-                <div className="text-xs font-semibold text-neutral-400">For Startups & Founders</div>
-                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">14-Day Custom MVP</h4>
+                <div className="text-xs font-semibold text-amber-400">Our Flagship Target</div>
+                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">Startup MVP Sprint</h4>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-neutral-100 font-display tabular-nums">$2,600+</span>
-                  <span className="text-xs text-neutral-400">fixed sprint</span>
+                  <span className="text-3xl font-bold text-white font-display tabular-nums">$1,850</span>
+                  <span className="text-xs text-neutral-400">fixed sprint · 10–14 days</span>
                 </div>
-                <p className="mt-3 text-xs text-neutral-400">
-                  Tailored full-stack product engineered from ground up. Auth, database, Stripe subscriptions, AI pipelines, and custom UX.
+                <p className="mt-3 text-xs text-neutral-400 leading-relaxed">
+                  Turn your startup idea into a validated, working product in 2 weeks. Tested with real early users & pitch-ready.
                 </p>
 
-                <ul className="mt-6 space-y-2 text-xs text-neutral-300">
+                <ul className="mt-6 space-y-2.5 text-xs text-neutral-200">
                   <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>14-day production delivery</span>
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>10–14 day rapid delivery sprint</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Next.js 15, PostgreSQL, Supabase/Node</span>
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Next.js 15, React 19, Tailwind CSS</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Multi-role permissions & Stripe</span>
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Core user workflows & interactive logic</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>100% intellectual property transfer</span>
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Stripe checkout or deposit payment gateway</span>
                   </li>
                   <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>30 days post-launch warranty</span>
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Custom domain & edge hosting setup</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>100% intellectual property transfer to your GitHub</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>30 days post-launch warranty support</span>
                   </li>
                 </ul>
               </div>
 
               <div className="mt-8 pt-4 border-t border-neutral-800">
                 <button
-                  onClick={onStartProject}
+                  onClick={() => onStartProject('mvp')}
+                  className="w-full rounded-lg bg-amber-400 py-2.5 text-xs font-bold text-neutral-950 hover:bg-amber-300 transition-all shadow-md shadow-amber-400/20"
+                >
+                  Start Startup MVP Sprint
+                </button>
+              </div>
+            </div>
+
+            {/* Tier 3: Full Scalable Application */}
+            <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
+              <div>
+                <div className="text-xs font-semibold text-neutral-400">Complete Production Platform</div>
+                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">Full Scalable Web Application</h4>
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-neutral-100 font-display tabular-nums">$3,600+</span>
+                  <span className="text-xs text-neutral-400">production build · 3–4 wks</span>
+                </div>
+                <p className="mt-3 text-xs text-neutral-400 leading-relaxed">
+                  Enterprise-ready, scalable software with multi-user auth, cloud database, asset hosting & billing.
+                </p>
+
+                <ul className="mt-6 space-y-2.5 text-xs text-neutral-300">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span><strong>Login & User Auth:</strong> Google OAuth, Email, Magic Links & RBAC</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span><strong>Scalable Database:</strong> PostgreSQL / Supabase with Row-Level Security</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span><strong>Image & Asset Cloud Hosting:</strong> High-speed CDN storage & uploads</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span><strong>Custom Domain & SSL:</strong> Global edge CDN & DNS routing</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span><strong>Stripe Billing:</strong> Recurring tiered subscriptions & customer portal</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Admin management portal & audit metrics</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-amber-400" />
+                    <span>CI/CD deployment pipeline + 60 days dedicated warranty</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-neutral-800">
+                <button
+                  onClick={() => onStartProject('full-app')}
                   className="w-full rounded-lg border border-neutral-700 bg-neutral-900 py-2.5 text-xs font-semibold text-neutral-200 hover:border-neutral-500 hover:text-white transition-colors"
                 >
-                  Scope Custom Sprint
+                  Scope Scalable Application
                 </button>
               </div>
             </div>
@@ -244,3 +269,4 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
     </section>
   );
 };
+

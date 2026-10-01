@@ -33,10 +33,10 @@ export interface OrderAddon {
 
 export interface ClientOrder {
   id: string;
-  orderType: 'template' | 'custom-mvp';
+  orderType: 'template' | 'custom-mvp' | 'package';
   templateId?: string;
   templateTitle?: string;
-  tier: 'turnkey' | 'raw' | 'custom-sprint';
+  tier: 'landing' | 'mvp' | 'full-app' | 'turnkey' | 'raw' | 'custom-sprint';
   clientName: string;
   clientEmail: string;
   clientPhone?: string;

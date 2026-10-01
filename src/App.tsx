@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Navbar } from './components/Navbar';
+import { Navbar, FontTheme } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CategoryFilter } from './components/CategoryFilter';
 import { TemplateCard } from './components/TemplateCard';
@@ -8,43 +8,43 @@ import { OrderTemplateModal } from './components/OrderTemplateModal';
 import { MvpCalculator } from './components/MvpCalculator';
 import { DoctorShowcase } from './components/DoctorShowcase';
 import { ProcessTimeline } from './components/ProcessTimeline';
-import { ClientOrdersDrawer } from './components/ClientOrdersDrawer';
 import { Footer } from './components/Footer';
-import { TEMPLATES, INITIAL_TEST_ORDERS } from './data/templates';
+import { TEMPLATES } from './data/templates';
 import { Category, TemplateItem, ClientOrder } from './types';
-import { Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<Category>('all');
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Modals & drawers
-  const [activeDemoTemplate, setActiveDemoTemplate] = useState<TemplateItem | null>(null);
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
-  const [selectedOrderTemplate, setSelectedOrderTemplate] = useState<TemplateItem | null>(null);
-  const [isCustomMvpMode, setIsCustomMvpMode] = useState(false);
-  const [customScopeTotal, setCustomScopeTotal] = useState(3200);
-  const [customScopeSummary, setCustomScopeSummary] = useState<string[]>([]);
-  const [isOrdersDrawerOpen, setIsOrdersDrawerOpen] = useState(false);
-
-  // Orders state with localStorage persistence
-  const [orders, setOrders] = useState<ClientOrder[]>(() => {
+  // Font Theme (default: 'outfit' - clean, modern tech/SaaS style)
+  const [fontTheme, setFontTheme] = useState<FontTheme>(() => {
     try {
-      const saved = localStorage.getItem('vektora_client_orders');
-      if (saved) return JSON.parse(saved);
+      const saved = localStorage.getItem('vektora_font_theme');
+      if (saved === 'outfit' || saved === 'cabinet' || saved === 'jakarta') return saved;
     } catch (e) {
-      console.error('Error loading saved orders', e);
+      // fallback
     }
-    return INITIAL_TEST_ORDERS;
+    return 'outfit';
   });
 
   useEffect(() => {
+    document.documentElement.setAttribute('data-font', fontTheme);
     try {
-      localStorage.setItem('vektora_client_orders', JSON.stringify(orders));
+      localStorage.setItem('vektora_font_theme', fontTheme);
     } catch (e) {
-      console.error('Error saving orders', e);
+      // ignore
     }
-  }, [orders]);
+  }, [fontTheme]);
+  
+  // Modals & configuration
+  const [activeDemoTemplate, setActiveDemoTemplate] = useState<TemplateItem | null>(null);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [selectedOrderTemplate, setSelectedOrderTemplate] = useState<TemplateItem | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<'landing' | 'mvp' | 'full-app'>('mvp');
+  const [isCustomMvpMode, setIsCustomMvpMode] = useState(false);
+  const [customScopeTotal, setCustomScopeTotal] = useState(1850);
+  const [customScopeSummary, setCustomScopeSummary] = useState<string[]>([]);
 
   // Compute category counts
   const categoryCounts = useMemo(() => {
@@ -86,6 +86,12 @@ export default function App() {
 
   const handleOrderTemplate = (template: TemplateItem) => {
     setSelectedOrderTemplate(template);
+    // If it's a doctor or clinic cabinet, default to Landing Page; otherwise Startup MVP
+    if (template.category === 'medical-clinic') {
+      setSelectedPackage('landing');
+    } else {
+      setSelectedPackage('mvp');
+    }
     setIsCustomMvpMode(false);
     setIsOrderModalOpen(true);
   };
@@ -94,19 +100,20 @@ export default function App() {
     setCustomScopeTotal(total);
     setCustomScopeSummary(summary);
     setSelectedOrderTemplate(null);
+    setSelectedPackage('mvp');
     setIsCustomMvpMode(true);
     setIsOrderModalOpen(true);
   };
 
-  const handleGeneralOrderClick = () => {
-    // Default to first template or custom mode
-    setSelectedOrderTemplate(TEMPLATES[0]);
+  const handleStartPackageProject = (packageType: 'landing' | 'mvp' | 'full-app' = 'mvp') => {
+    setSelectedOrderTemplate(null);
+    setSelectedPackage(packageType);
     setIsCustomMvpMode(false);
     setIsOrderModalOpen(true);
   };
 
   const handleOrderSubmitted = (newOrder: ClientOrder) => {
-    setOrders(prev => [newOrder, ...prev]);
+    console.log('Order submitted successfully:', newOrder);
   };
 
   const doctorTemplate = TEMPLATES.find(t => t.category === 'medical-clinic');
@@ -116,9 +123,9 @@ export default function App() {
       
       {/* Top Navigation */}
       <Navbar
-        onOpenOrderModal={handleGeneralOrderClick}
-        onOpenOrdersDrawer={() => setIsOrdersDrawerOpen(true)}
-        orderCount={orders.length}
+        onOpenOrderModal={() => handleStartPackageProject('mvp')}
+        fontTheme={fontTheme}
+        onChangeFontTheme={setFontTheme}
       />
 
       {/* Main Content */}
@@ -158,10 +165,10 @@ export default function App() {
 
               {/* Scope custom alternative quick link */}
               <button
-                onClick={() => handleScopeCustomMvp(3200, ['Custom Bespoke Architecture'])}
+                onClick={() => handleStartPackageProject('full-app')}
                 className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold group self-start md:self-auto"
               >
-                <span>Need something 100% custom from scratch?</span>
+                <span>Need a full scalable application with auth & database?</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </button>
             </div>
@@ -212,10 +219,10 @@ export default function App() {
               </div>
 
               <button
-                onClick={() => handleScopeCustomMvp(2800, ['Bespoke Custom Build'])}
+                onClick={() => handleStartPackageProject('full-app')}
                 className="shrink-0 rounded-lg bg-neutral-100 px-5 py-3 text-xs font-bold text-neutral-950 hover:bg-amber-400 active:scale-[0.98] transition-all whitespace-nowrap"
               >
-                Request Custom Quote
+                Request Custom Application
               </button>
             </div>
 
@@ -233,7 +240,7 @@ export default function App() {
         />
 
         {/* Process Timeline & Transparent Pricing */}
-        <ProcessTimeline onStartProject={handleGeneralOrderClick} />
+        <ProcessTimeline onStartProject={handleStartPackageProject} />
 
       </main>
 
@@ -255,23 +262,14 @@ export default function App() {
         isOpen={isOrderModalOpen}
         onClose={() => setIsOrderModalOpen(false)}
         selectedTemplate={selectedOrderTemplate}
+        initialPackage={selectedPackage}
         isCustomMvpMode={isCustomMvpMode}
         customScopeTotal={customScopeTotal}
         customScopeSummary={customScopeSummary}
         onOrderSubmitted={handleOrderSubmitted}
       />
 
-      {/* Client Orders / Inquiries Tracker Drawer */}
-      <ClientOrdersDrawer
-        isOpen={isOrdersDrawerOpen}
-        onClose={() => setIsOrdersDrawerOpen(false)}
-        orders={orders}
-        onNewOrder={() => {
-          setIsOrdersDrawerOpen(false);
-          handleGeneralOrderClick();
-        }}
-      />
-
     </div>
   );
 }
+

@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
-import { Menu, X, ShoppingBag } from 'lucide-react';
+import { Menu, X, Type, ChevronDown } from 'lucide-react';
+
+export type FontTheme = 'outfit' | 'cabinet' | 'jakarta';
 
 interface NavbarProps {
   onOpenOrderModal: () => void;
-  onOpenOrdersDrawer: () => void;
-  orderCount: number;
+  fontTheme: FontTheme;
+  onChangeFontTheme: (theme: FontTheme) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenOrderModal,
-  onOpenOrdersDrawer,
-  orderCount
+  fontTheme,
+  onChangeFontTheme
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [fontMenuOpen, setFontMenuOpen] = useState(false);
+
+  const fontOptions: { id: FontTheme; label: string; sub: string }[] = [
+    { id: 'outfit', label: 'Outfit (Modern Tech)', sub: 'Sleek SaaS & Startup aesthetic' },
+    { id: 'cabinet', label: 'Cabinet Grotesk', sub: 'Punchy editorial agency style' },
+    { id: 'jakarta', label: 'Plus Jakarta Sans', sub: 'Crisp clinical & tech precision' }
+  ];
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-neutral-800/80 bg-neutral-950/90 backdrop-blur-md">
@@ -26,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           Vektora Studio
         </a>
 
-        {/* Zone 2: 4-5 Navigation Links (Clean text links with subtle hover underlines) */}
+        {/* Zone 2: 4-5 Navigation Links */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
           <a href="#templates" className="hover:text-neutral-100 transition-colors">
             Templates & Examples
@@ -37,29 +46,59 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a href="#doctor-cabinets" className="hover:text-neutral-100 transition-colors">
             Doctor Cabinets
           </a>
-          <a href="#process" className="hover:text-neutral-100 transition-colors">
-            How It Works
-          </a>
           <a href="#pricing" className="hover:text-neutral-100 transition-colors">
             Pricing
           </a>
+          <a href="#process" className="hover:text-neutral-100 transition-colors">
+            How It Works
+          </a>
         </nav>
 
-        {/* Zone 3: 1-2 Primary Actions */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onOpenOrdersDrawer}
-            className="relative flex items-center gap-2 rounded-lg border border-neutral-800 bg-neutral-900/60 px-3 py-2 text-xs font-medium text-neutral-300 hover:border-neutral-700 hover:text-neutral-100 transition-colors whitespace-nowrap"
-            title="View placed orders & inquiry tracker"
-          >
-            <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
-            <span className="hidden sm:inline">Orders</span>
-            {orderCount > 0 && (
-              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-amber-400 text-[10px] font-bold text-neutral-950 tabular-nums">
-                {orderCount}
+        {/* Zone 3: Actions + Font Switcher */}
+        <div className="flex items-center gap-2.5">
+          
+          {/* Interactive Font Selector */}
+          <div className="relative">
+            <button
+              onClick={() => setFontMenuOpen(!fontMenuOpen)}
+              className="flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900/60 px-2.5 py-2 text-xs font-medium text-neutral-300 hover:border-neutral-700 hover:text-white transition-colors"
+              title="Change Typography Style"
+            >
+              <Type className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden lg:inline capitalize">
+                {fontTheme === 'outfit' ? 'Outfit' : fontTheme === 'cabinet' ? 'Cabinet' : 'Jakarta'}
               </span>
+              <ChevronDown className="w-3 h-3 text-neutral-500" />
+            </button>
+
+            {fontMenuOpen && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setFontMenuOpen(false)} />
+                <div className="absolute right-0 mt-2 w-56 rounded-xl border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl z-20">
+                  <div className="px-3 py-1.5 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider border-b border-neutral-800/80 mb-1">
+                    Select Typography
+                  </div>
+                  {fontOptions.map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => {
+                        onChangeFontTheme(opt.id);
+                        setFontMenuOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-colors flex flex-col ${
+                        fontTheme === opt.id
+                          ? 'bg-neutral-800 text-amber-400 font-semibold'
+                          : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white'
+                      }`}
+                    >
+                      <span>{opt.label}</span>
+                      <span className="text-[10px] text-neutral-400 font-normal">{opt.sub}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
             )}
-          </button>
+          </div>
 
           <button
             onClick={onOpenOrderModal}
@@ -104,21 +143,46 @@ export const Navbar: React.FC<NavbarProps> = ({
             Doctor Cabinets
           </a>
           <a 
-            href="#process" 
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
-          >
-            How It Works
-          </a>
-          <a 
             href="#pricing" 
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
           >
             Pricing
           </a>
+          <a 
+            href="#process" 
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
+          >
+            How It Works
+          </a>
+
+          {/* Mobile font switcher */}
+          <div className="pt-3 border-t border-neutral-800">
+            <div className="text-xs text-neutral-400 mb-2 font-medium">Select Typography:</div>
+            <div className="flex gap-2">
+              {fontOptions.map((opt) => (
+                <button
+                  key={opt.id}
+                  onClick={() => {
+                    onChangeFontTheme(opt.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-3 py-1.5 rounded text-xs font-medium border ${
+                    fontTheme === opt.id
+                      ? 'border-amber-400 bg-amber-400/10 text-amber-400'
+                      : 'border-neutral-800 text-neutral-400'
+                  }`}
+                >
+                  {opt.id === 'outfit' ? 'Outfit' : opt.id === 'cabinet' ? 'Cabinet' : 'Jakarta'}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </header>
   );
 };
+
+

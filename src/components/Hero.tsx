@@ -62,19 +62,19 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-4 pt-10 border-t border-neutral-800/80">
           <div>
             <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">48–72h</div>
-            <div className="mt-1 text-xs text-neutral-400">Turnkey Template Delivery</div>
+            <div className="mt-1 text-xs text-neutral-400">High-Converting Landing Pages</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">14 Days</div>
-            <div className="mt-1 text-xs text-neutral-400">Custom Full-Stack MVP Sprint</div>
+            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">10–14 Days</div>
+            <div className="mt-1 text-xs text-neutral-400">Validated Startup MVP Sprints</div>
+          </div>
+          <div>
+            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display">Scalable Stack</div>
+            <div className="mt-1 text-xs text-neutral-400">Auth, DB, Cloud Hosting, Domain</div>
           </div>
           <div>
             <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">100%</div>
-            <div className="mt-1 text-xs text-neutral-400">Code & Intellectual Property Ownership</div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">$0 Hidden Fees</div>
-            <div className="mt-1 text-xs text-neutral-400">Guaranteed Fixed Project Price</div>
+            <div className="mt-1 text-xs text-neutral-400">Code & IP Transfer on GitHub</div>
           </div>
         </div>
 

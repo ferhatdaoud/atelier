@@ -84,10 +84,10 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         {/* Price & Action Footer */}
         <div className="mt-5 pt-4 border-t border-neutral-800 flex items-center justify-between gap-3">
           <div>
-            <div className="text-[11px] text-neutral-400">Turnkey Customized</div>
+            <div className="text-[11px] text-neutral-400">Turnkey (Done-For-You)</div>
             <div className="text-lg font-bold text-neutral-100 font-display tabular-nums">
               ${template.turnkeyPrice}
-              <span className="text-xs font-normal text-neutral-400 ml-1">or raw ${template.rawPrice}</span>
+              <span className="text-xs font-normal text-neutral-400 ml-1">or raw code ${template.rawPrice}</span>
             </div>
           </div>
 
