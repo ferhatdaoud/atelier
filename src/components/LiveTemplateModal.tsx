@@ -62,11 +62,11 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
         </div>
 
         {/* Center: Device Viewport Switcher */}
-        <div className="hidden sm:flex items-center gap-1 rounded-lg border border-neutral-800 bg-neutral-950 p-1">
+        <div className="hidden sm:flex items-center gap-1 rounded-full border border-white/10 bg-black/60 p-1">
           <button
             onClick={() => setDeviceView('desktop')}
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded transition-colors ${
-              deviceView === 'desktop' ? 'bg-neutral-800 text-amber-400' : 'text-neutral-400 hover:text-white'
+            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+              deviceView === 'desktop' ? 'bg-[#ff6b2c] text-white font-bold' : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
@@ -74,8 +74,8 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
           </button>
           <button
             onClick={() => setDeviceView('tablet')}
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded transition-colors ${
-              deviceView === 'tablet' ? 'bg-neutral-800 text-amber-400' : 'text-neutral-400 hover:text-white'
+            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+              deviceView === 'tablet' ? 'bg-[#ff6b2c] text-white font-bold' : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Tablet className="w-3.5 h-3.5" />
@@ -83,8 +83,8 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
           </button>
           <button
             onClick={() => setDeviceView('mobile')}
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded transition-colors ${
-              deviceView === 'mobile' ? 'bg-neutral-800 text-amber-400' : 'text-neutral-400 hover:text-white'
+            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+              deviceView === 'mobile' ? 'bg-[#ff6b2c] text-white font-bold' : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
@@ -95,12 +95,12 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
         {/* Right: Direct Order CTA */}
         <div className="flex items-center gap-3">
           <div className="hidden md:block text-right">
-            <div className="text-[11px] text-neutral-400">Ready in {template.turnaroundTime}</div>
-            <div className="text-xs font-bold text-neutral-100 tabular-nums">${template.turnkeyPrice} Turnkey</div>
+            <div className="text-[11px] text-zinc-400 font-mono">Turnaround: {template.turnaroundTime}</div>
+            <div className="text-xs font-bold text-white tabular-nums">${template.turnkeyPrice} Turnkey</div>
           </div>
           <button
             onClick={() => onOrder(template)}
-            className="rounded-lg bg-amber-400 px-4 py-2 text-xs font-semibold text-neutral-950 hover:bg-amber-300 active:scale-[0.98] transition-all whitespace-nowrap"
+            className="rounded-full bg-[#ff6b2c] px-4 py-2 text-xs font-bold text-black hover:bg-[#ff824d] hover:shadow-[0_0_20px_rgba(204,255,0,0.3)] active:scale-[0.98] transition-all whitespace-nowrap"
           >
             Order This Design
           </button>
@@ -130,7 +130,7 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
               {/* SaaS Top Bar */}
               <div className="flex items-center justify-between pb-8 border-b border-neutral-800/80">
                 <div className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                  <div className="w-6 h-6 rounded bg-amber-400 text-neutral-950 flex items-center justify-center font-bold text-xs">P</div>
+                  <div className="w-6 h-6 rounded bg-[#ff6b2c] text-neutral-950 flex items-center justify-center font-bold text-xs">P</div>
                   <span>Pulse.ai</span>
                 </div>
                 <div className="flex items-center gap-4 text-xs text-neutral-400">
@@ -143,7 +143,7 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
 
               {/* SaaS Hero */}
               <div className="py-12 text-center max-w-2xl mx-auto">
-                <div className="inline-flex items-center gap-2 text-xs text-amber-400 font-medium mb-4">
+                <div className="inline-flex items-center gap-2 text-xs text-[#ff6b2c] font-medium mb-4">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Next-Gen Analytics Engine for High-Growth Startups</span>
                 </div>
@@ -172,11 +172,11 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
                         value={waitlistEmail}
                         onChange={(e) => setWaitlistEmail(e.target.value)}
                         placeholder="Enter your work email..."
-                        className="flex-1 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-amber-400 focus:outline-none"
+                        className="flex-1 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2 text-xs text-white placeholder-neutral-500 focus:border-[#ff6b2c] focus:outline-none"
                       />
                       <button
                         type="submit"
-                        className="rounded-lg bg-amber-400 px-4 py-2 text-xs font-semibold text-neutral-950 hover:bg-amber-300"
+                        className="rounded-lg bg-[#ff6b2c] px-4 py-2 text-xs font-semibold text-neutral-950 hover:bg-[#ff824d]"
                       >
                         Get Access
                       </button>
@@ -213,7 +213,7 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
                     <div key={i} className="flex-1 flex flex-col items-center gap-1 group">
                       <div 
                         style={{ height: `${h * 0.45}px` }} 
-                        className="w-full bg-amber-400/80 group-hover:bg-amber-300 rounded-t transition-all"
+                        className="w-full bg-[#ff6b2c]/80 group-hover:bg-[#ff824d] rounded-t transition-all"
                       />
                       <span className="text-[9px] text-neutral-500 font-mono">W{i+1}</span>
                     </div>
@@ -232,7 +232,7 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
                   </button>
                   <button
                     onClick={() => setBillingCycle('annual')}
-                    className={`px-3 py-1 rounded transition-colors ${billingCycle === 'annual' ? 'bg-neutral-800 text-amber-400 font-medium' : 'text-neutral-400'}`}
+                    className={`px-3 py-1 rounded transition-colors ${billingCycle === 'annual' ? 'bg-neutral-800 text-[#ff6b2c] font-medium' : 'text-neutral-400'}`}
                   >
                     Annual (Save 20%)
                   </button>
@@ -246,8 +246,8 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
                     </div>
                     <p className="text-xs text-neutral-400 mt-2">Up to 10k monthly active users with full analytics.</p>
                   </div>
-                  <div className="rounded-xl border border-amber-400/50 bg-neutral-900/80 p-5">
-                    <div className="text-sm font-semibold text-amber-400">Growth Scale</div>
+                  <div className="rounded-xl border border-[#ff6b2c]/50 bg-neutral-900/80 p-5">
+                    <div className="text-sm font-semibold text-[#ff6b2c]">Growth Scale</div>
                     <div className="text-2xl font-bold text-white mt-2 tabular-nums">
                       ${billingCycle === 'annual' ? '99' : '119'}<span className="text-xs text-neutral-400">/mo</span>
                     </div>
@@ -426,7 +426,7 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
                   <div className="mt-6 flex items-center gap-3">
                     <button
                       onClick={() => setCartCount(c => c + 1)}
-                      className="rounded-lg bg-white px-4 py-2 text-xs font-bold text-neutral-950 hover:bg-amber-400 transition-colors"
+                      className="rounded-lg bg-white px-4 py-2 text-xs font-bold text-neutral-950 hover:bg-[#ff6b2c] transition-colors"
                     >
                       Test Interactive Action (+{cartCount})
                     </button>

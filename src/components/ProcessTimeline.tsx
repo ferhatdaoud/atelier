@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Check, Sparkles, ShieldCheck } from 'lucide-react';
+import { Star, TrendingUp, ShieldCheck, Check } from 'lucide-react';
 
 interface ProcessTimelineProps {
   onStartProject: (packageType?: 'landing' | 'mvp' | 'full-app') => void;
@@ -7,266 +7,219 @@ interface ProcessTimelineProps {
 
 export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject }) => {
   return (
-    <section id="process" className="py-20 md:py-28 border-b border-neutral-800/80 bg-neutral-950">
+    <section id="pricing" className="py-24 sm:py-36 bg-[#000000] relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-2 text-xs font-medium text-amber-400 mb-3">
-            <span>Transparent Workflow</span>
-            <span aria-hidden="true">·</span>
-            <span>Zero Endless Meetings</span>
-            <span aria-hidden="true">·</span>
-            <span>Guaranteed Dates</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-100 font-display">
-            How We Get You Live in Record Time
+        {/* Centered Section Header matching screenshot */}
+        <div className="text-center mb-16 sm:mb-20">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white font-display tracking-tight">
+            Pricing Plans
           </h2>
-          <p className="mt-4 text-base text-neutral-400 leading-relaxed">
-            Whether you need a high-converting landing page, a rapid startup MVP, or a full scalable web application, our process removes friction so you can focus on revenue.
+          <p className="mt-4 text-sm sm:text-base text-zinc-400 font-sans">
+            Flexible plans for every stage
           </p>
         </div>
 
-        {/* 4 Step Visual Flow */}
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+        {/* 3 Pricing Cards matching screenshot */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
+          {/* Card 1: Starter / Bespoke Website */}
+          <div className="rounded-2xl sm:rounded-[22px] border border-white/10 bg-[#0d0d0d] p-8 flex flex-col justify-between hover:border-white/20 transition-all duration-300">
             <div>
-              <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 01</div>
-              <h4 className="text-base font-bold text-neutral-100 font-display">Select Your Package</h4>
-              <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                Choose between a fast Landing Page, a 14-day Startup MVP, or a Full Scalable Web Application with custom scope.
+              <div className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white mb-6">
+                <Star className="w-4 h-4" />
+              </div>
+              <h3 className="text-xl font-bold text-white font-display">Starter</h3>
+              <p className="mt-2 text-xs text-zinc-400 leading-relaxed font-sans min-h-[36px]">
+                Perfect for startups and small teams getting started with web dev.
               </p>
+
+              {/* Price */}
+              <div className="mt-6 flex items-baseline gap-1">
+                <span className="text-4xl sm:text-5xl font-extrabold text-white font-display tabular-nums">$590</span>
+                <span className="text-xs text-zinc-400 font-mono">/launch</span>
+              </div>
+
+              {/* Checklist */}
+              <ul className="mt-8 space-y-3 pt-6 border-t border-white/[0.08] text-xs text-zinc-300 font-sans">
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Custom responsive layout</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Appointment booking / lead forms</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Custom domain & SSL setup</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Turnkey live delivery in 48–72h</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>100% design & asset ownership</span>
+                </li>
+              </ul>
             </div>
-            <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
-              Immediate fixed pricing
-            </div>
+
+            <button
+              onClick={() => onStartProject('landing')}
+              className="mt-8 w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 py-3 text-xs font-bold uppercase tracking-wider text-white hover:border-[#ff6b2c] hover:bg-white/10 transition-all"
+            >
+              <span>Get Started</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17L17 7M17 7H8M17 7V16" />
+              </svg>
+            </button>
           </div>
 
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
+          {/* Card 2: Growth / Startup MVP (FEATURED WITH ORANGE AMBIENT GLOW) */}
+          <div 
+            className="rounded-2xl sm:rounded-[22px] border border-[#ff6b2c]/40 bg-[#0d0d0d] p-8 flex flex-col justify-between relative overflow-hidden shadow-2xl transition-all duration-300"
+            style={{
+              backgroundImage: 'radial-gradient(ellipse at bottom right, rgba(255, 107, 44, 0.25) 0%, rgba(13, 13, 13, 0.95) 70%)'
+            }}
+          >
             <div>
-              <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 02</div>
-              <h4 className="text-base font-bold text-neutral-100 font-display">Quick Onboarding Intake</h4>
-              <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                Share your brand assets, logo, copywriting, or book a 25-minute technical discovery call with our lead engineer.
+              <div className="w-10 h-10 rounded-full border border-[#ff6b2c]/40 bg-[#ff6b2c]/10 flex items-center justify-center text-[#ff6b2c] mb-6">
+                <TrendingUp className="w-4 h-4" />
+              </div>
+              <h3 className="text-xl font-bold text-white font-display">Growth</h3>
+              <p className="mt-2 text-xs text-zinc-300 leading-relaxed font-sans min-h-[36px]">
+                Everything you need to automate and grow your business.
               </p>
+
+              {/* Price */}
+              <div className="mt-6 flex items-baseline gap-1">
+                <span className="text-4xl sm:text-5xl font-extrabold text-[#ff6b2c] font-display tabular-nums">$1,850</span>
+                <span className="text-xs text-zinc-400 font-mono">/sprint</span>
+              </div>
+
+              {/* Checklist */}
+              <ul className="mt-8 space-y-3 pt-6 border-t border-white/[0.12] text-xs text-zinc-200 font-sans">
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[#ff6b2c] bg-[#ff6b2c]">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span><strong>3–7 day rapid delivery sprint</strong></span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[#ff6b2c] bg-[#ff6b2c]">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Next.js 15, React 19 & Tailwind CSS</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[#ff6b2c] bg-[#ff6b2c]">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Stripe payments & checkout flow</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[#ff6b2c] bg-[#ff6b2c]">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>User auth & database (Supabase / Postgres)</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[#ff6b2c] bg-[#ff6b2c]">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>100% GitHub repository transfer</span>
+                </li>
+              </ul>
             </div>
-            <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
-              Zero complicated paperwork
-            </div>
+
+            <button
+              onClick={() => onStartProject('mvp')}
+              className="mt-8 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6b2c] py-3 text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_25px_rgba(255,107,44,0.4)] hover:bg-[#ff824d] transition-all"
+            >
+              <span>Get Started</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17L17 7M17 7H8M17 7V16" />
+              </svg>
+            </button>
           </div>
 
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
+          {/* Card 3: Enterprise / Scalable App */}
+          <div className="rounded-2xl sm:rounded-[22px] border border-white/10 bg-[#0d0d0d] p-8 flex flex-col justify-between hover:border-white/20 transition-all duration-300">
             <div>
-              <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 03</div>
-              <h4 className="text-base font-bold text-neutral-100 font-display">Senior Engineering</h4>
-              <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                We build the UI, database, authentication, storage, and APIs. Tested across desktop and mobile devices.
+              <div className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-white mb-6">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
+              <h3 className="text-xl font-bold text-white font-display">Enterprise</h3>
+              <p className="mt-2 text-xs text-zinc-400 leading-relaxed font-sans min-h-[36px]">
+                Custom solutions for large teams and complex operations.
               </p>
+
+              {/* Price */}
+              <div className="mt-6 flex items-baseline gap-1">
+                <span className="text-4xl sm:text-5xl font-extrabold text-white font-display tabular-nums">Custom</span>
+                <span className="text-xs text-zinc-400 font-mono">/project</span>
+              </div>
+
+              {/* Checklist */}
+              <ul className="mt-8 space-y-3 pt-6 border-t border-white/[0.08] text-xs text-zinc-300 font-sans">
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Full brand strategy & design system</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Custom scalable backend architecture</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>RBAC & enterprise permissions</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>High-traffic load balancing & SLAs</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
+                    <Check className="h-3 w-3 text-white" />
+                  </div>
+                  <span>Dedicated Slack channel & support</span>
+                </li>
+              </ul>
             </div>
-            <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
-              Daily async updates
-            </div>
+
+            <button
+              onClick={() => onStartProject('full-app')}
+              className="mt-8 w-full inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 py-3 text-xs font-bold uppercase tracking-wider text-white hover:border-[#ff6b2c] hover:bg-white/10 transition-all"
+            >
+              <span>Get Started</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M7 17L17 7M17 7H8M17 7V16" />
+              </svg>
+            </button>
           </div>
 
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
-            <div>
-              <div className="text-xs font-mono text-amber-400 font-bold mb-2">Step 04</div>
-              <h4 className="text-base font-bold text-neutral-100 font-display">Launch & 100% Ownership</h4>
-              <p className="mt-2 text-xs text-neutral-400 leading-relaxed">
-                We connect your custom domain with SSL, transfer the clean GitHub repository to you, and support your launch.
-              </p>
-            </div>
-            <div className="mt-6 pt-4 border-t border-neutral-800 text-[11px] text-neutral-400">
-              100% your IP & code
-            </div>
-          </div>
-
-        </div>
-
-        {/* Pricing Comparison Table */}
-        <div id="pricing" className="mt-20 pt-16 border-t border-neutral-800">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h3 className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display">
-              Clear, Predictable Investment Tiers
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-neutral-400">
-              Guaranteed fixed quotes with zero surprise retainers. Tailored for clinics, startups, and scalable web apps.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            {/* Tier 1: Landing Page */}
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
-              <div>
-                <div className="text-xs font-semibold text-neutral-400">Clinics, Cabinets & Waitlists</div>
-                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">High-Converting Landing Page</h4>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-neutral-100 font-display tabular-nums">$590</span>
-                  <span className="text-xs text-neutral-400">flat fee · 48–72h</span>
-                </div>
-                <p className="mt-3 text-xs text-neutral-400 leading-relaxed">
-                  Fast, ultra-clean web presence designed to turn visitors into booked patients, clients, or early adopters.
-                </p>
-
-                <ul className="mt-6 space-y-2.5 text-xs text-neutral-300">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Delivered live in 48–72 hours</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Your exact logo, branding & copy</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Appointment booking or lead form connected</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Custom domain & automated SSL certificate</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Mobile responsive & local SEO setup</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>14 days post-launch revisions</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mt-8 pt-4 border-t border-neutral-800">
-                <button
-                  onClick={() => onStartProject('landing')}
-                  className="w-full rounded-lg border border-neutral-700 bg-neutral-900 py-2.5 text-xs font-semibold text-neutral-200 hover:border-neutral-500 hover:text-white transition-colors"
-                >
-                  Order Landing Page
-                </button>
-              </div>
-            </div>
-
-            {/* Tier 2: Startup MVP (Our Primary Target) */}
-            <div className="rounded-xl border border-amber-400/80 bg-neutral-900/80 p-6 flex flex-col justify-between relative shadow-lg shadow-amber-400/5">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded bg-amber-400 px-2.5 py-0.5 text-[10px] font-bold text-neutral-950 uppercase tracking-wide">
-                Primary Specialty
-              </div>
-
-              <div>
-                <div className="text-xs font-semibold text-amber-400">Our Flagship Target</div>
-                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">Startup MVP Sprint</h4>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-white font-display tabular-nums">$1,850</span>
-                  <span className="text-xs text-neutral-400">fixed sprint · 10–14 days</span>
-                </div>
-                <p className="mt-3 text-xs text-neutral-400 leading-relaxed">
-                  Turn your startup idea into a validated, working product in 2 weeks. Tested with real early users & pitch-ready.
-                </p>
-
-                <ul className="mt-6 space-y-2.5 text-xs text-neutral-200">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>10–14 day rapid delivery sprint</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Next.js 15, React 19, Tailwind CSS</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Core user workflows & interactive logic</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Stripe checkout or deposit payment gateway</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Custom domain & edge hosting setup</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>100% intellectual property transfer to your GitHub</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>30 days post-launch warranty support</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mt-8 pt-4 border-t border-neutral-800">
-                <button
-                  onClick={() => onStartProject('mvp')}
-                  className="w-full rounded-lg bg-amber-400 py-2.5 text-xs font-bold text-neutral-950 hover:bg-amber-300 transition-all shadow-md shadow-amber-400/20"
-                >
-                  Start Startup MVP Sprint
-                </button>
-              </div>
-            </div>
-
-            {/* Tier 3: Full Scalable Application */}
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 flex flex-col justify-between">
-              <div>
-                <div className="text-xs font-semibold text-neutral-400">Complete Production Platform</div>
-                <h4 className="text-lg font-bold text-neutral-100 font-display mt-1">Full Scalable Web Application</h4>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-neutral-100 font-display tabular-nums">$3,600+</span>
-                  <span className="text-xs text-neutral-400">production build · 3–4 wks</span>
-                </div>
-                <p className="mt-3 text-xs text-neutral-400 leading-relaxed">
-                  Enterprise-ready, scalable software with multi-user auth, cloud database, asset hosting & billing.
-                </p>
-
-                <ul className="mt-6 space-y-2.5 text-xs text-neutral-300">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span><strong>Login & User Auth:</strong> Google OAuth, Email, Magic Links & RBAC</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span><strong>Scalable Database:</strong> PostgreSQL / Supabase with Row-Level Security</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span><strong>Image & Asset Cloud Hosting:</strong> High-speed CDN storage & uploads</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span><strong>Custom Domain & SSL:</strong> Global edge CDN & DNS routing</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span><strong>Stripe Billing:</strong> Recurring tiered subscriptions & customer portal</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Admin management portal & audit metrics</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-amber-400" />
-                    <span>CI/CD deployment pipeline + 60 days dedicated warranty</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="mt-8 pt-4 border-t border-neutral-800">
-                <button
-                  onClick={() => onStartProject('full-app')}
-                  className="w-full rounded-lg border border-neutral-700 bg-neutral-900 py-2.5 text-xs font-semibold text-neutral-200 hover:border-neutral-500 hover:text-white transition-colors"
-                >
-                  Scope Scalable Application
-                </button>
-              </div>
-            </div>
-
-          </div>
         </div>
 
       </div>
     </section>
   );
 };
-

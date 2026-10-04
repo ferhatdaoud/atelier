@@ -10,7 +10,7 @@ export const TEMPLATES: TemplateItem[] = [
     turnkeyPrice: 790,
     rawPrice: 199,
     turnaroundTime: '48 Hours',
-    image: '/src/assets/images/template_startup_saas_1790699168770.jpg',
+    image: '/images/project-1-novus.jpg',
     tags: ['Next.js 15', 'Tailwind CSS', 'Stripe Subscriptions', 'Supabase Auth', 'AI Insights UI'],
     features: [
       'Interactive SaaS analytics dashboard mockup',
@@ -34,7 +34,7 @@ export const TEMPLATES: TemplateItem[] = [
     turnkeyPrice: 650,
     rawPrice: 179,
     turnaroundTime: '48 Hours',
-    image: '/src/assets/images/template_doctor_clinic_1790699182367.jpg',
+    image: '/images/template-doctor.jpg',
     tags: ['Doctor Profile', 'Appointment Booking', 'HIPAA Ready UI', 'Treatment Menu', 'Google Reviews'],
     features: [
       'Step-by-step patient appointment request scheduler',
@@ -58,7 +58,7 @@ export const TEMPLATES: TemplateItem[] = [
     turnkeyPrice: 850,
     rawPrice: 220,
     turnaroundTime: '72 Hours',
-    image: '/src/assets/images/template_startup_saas_1790699168770.jpg',
+    image: '/images/project-1-novus.jpg',
     tags: ['API Docs', 'Syntax Highlighting', 'Self-Serve Auth', 'CLI Terminal Mockup', 'Changelog'],
     features: [
       'Interactive live API endpoint sandbox preview',
@@ -81,7 +81,7 @@ export const TEMPLATES: TemplateItem[] = [
     turnkeyPrice: 690,
     rawPrice: 189,
     turnaroundTime: '48 Hours',
-    image: '/src/assets/images/template_doctor_clinic_1790699182367.jpg',
+    image: '/images/template-doctor.jpg',
     tags: ['Aesthetics', 'Treatment Calculator', 'Doctor Credentials', 'Patient Stories'],
     features: [
       'Interactive treatment consultation guide',
@@ -104,7 +104,7 @@ export const TEMPLATES: TemplateItem[] = [
     turnkeyPrice: 950,
     rawPrice: 249,
     turnaroundTime: '3-4 Days',
-    image: '/src/assets/images/template_dtc_ecommerce_1790699194408.jpg',
+    image: '/images/template-ecommerce.jpg',
     tags: ['Shopify Ready', 'Slide-out Cart', 'Editorial Lookbook', 'Product Storytelling'],
     features: [
       'Ultra-fast slideout cart drawer with free shipping bar',
@@ -127,7 +127,7 @@ export const TEMPLATES: TemplateItem[] = [
     turnkeyPrice: 1150,
     rawPrice: 299,
     turnaroundTime: '3-5 Days',
-    image: '/src/assets/images/template_architect_studio_1790699205946.jpg',
+    image: '/images/template-architect.jpg',
     tags: ['Editorial Grid', 'Project Vault', 'Bespoke Inquiry Form', 'Fullscreen Gallery'],
     features: [
       'Interactive architectural project index with filtering by typology',

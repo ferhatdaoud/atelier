@@ -1,98 +1,179 @@
 import React from 'react';
-import { ArrowRight, Code2, Sparkles, Clock, ShieldCheck } from 'lucide-react';
 
 interface HeroProps {
-  onExploreTemplates: () => void;
-  onScopeCustomMvp: () => void;
+  onExploreWork: () => void;
+  onBookCall: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
-  onExploreTemplates,
-  onScopeCustomMvp
+  onExploreWork,
+  onBookCall
 }) => {
   return (
-    <section className="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28 border-b border-neutral-800/60">
-      {/* Background ambient lighting */}
+    <section 
+      id="home" 
+      className="relative min-h-screen flex flex-col justify-between pt-32 pb-16 overflow-hidden bg-[#000000]"
+      style={{
+        backgroundImage: `url('/images/home-hero-bg.jpg')`,
+        backgroundPosition: 'right center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
+      }}
+    >
+      {/* Subtle overlay gradient to ensure crisp text readability */}
       <div 
         aria-hidden="true" 
-        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-amber-500/10 via-amber-600/5 to-transparent blur-3xl opacity-70"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent -z-10" 
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 sm:px-12 lg:px-16 w-full flex-1 flex flex-col justify-center">
         
-        {/* Editorial kicker (clean unboxed text with subtle separator, no pill capsules) */}
-        <div className="flex items-center gap-2 text-xs font-medium text-amber-400 mb-6">
-          <span>Digital Agency & Productized Studio</span>
-          <span aria-hidden="true">·</span>
-          <span>Zero Bureaucracy</span>
-          <span aria-hidden="true">·</span>
-          <span>Fixed Timelines</span>
+        {/* Main Hero Copy - Left Aligned */}
+        <div className="max-w-3xl pt-8 sm:pt-14">
+          
+          {/* Pre-title: Tailored for web dev studio */}
+          <div className="text-[#ff6b2c] tracking-[0.2em] text-xs font-bold uppercase mb-5 font-mono">
+            WEB DEV FOR STARTUPS & BESPOKE WEBSITES
+          </div>
+
+          {/* Main Headline */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-bold tracking-tight text-white font-display leading-[1.08]">
+            Building websites for people. <br />
+            <span className="text-[#ff6b2c]">Fast MVPs for startups.</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="mt-6 text-sm sm:text-base md:text-lg text-zinc-300 max-w-lg leading-relaxed font-sans font-normal">
+            From 3–7 day production-ready SaaS MVPs with auth, Stripe, and scalable databases, to custom high-converting websites for clinics, founders, and professionals.
+          </p>
+
+          {/* Primary CTA Button: LET'S TALK ↗ */}
+          <div className="mt-8 flex items-center gap-4">
+            <button
+              onClick={onBookCall}
+              className="group inline-flex items-center gap-2.5 rounded-full bg-[#ff6b2c] px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_35px_rgba(255,107,44,0.45)] hover:bg-[#ff824d] transition-all hover:scale-105 active:scale-95"
+            >
+              <span>LET'S TALK</span>
+              <svg 
+                width="14" 
+                height="14" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                stroke="currentColor" 
+                strokeWidth="2.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+                className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              >
+                <path d="M7 17L17 7M17 7H8M17 7V16" />
+              </svg>
+            </button>
+
+            <button
+              onClick={onExploreWork}
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-xs font-semibold uppercase tracking-wider text-zinc-300 hover:text-white hover:border-[#ff6b2c] hover:bg-white/10 transition-all"
+            >
+              <span>View Works</span>
+            </button>
+          </div>
+
         </div>
 
-        {/* Primary Headline: text-wrap balance to avoid orphaned words */}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-neutral-100 max-w-4xl font-display leading-[1.12]">
-          We build fast, scalable MVPs for startups and premium websites for modern professionals.
-        </h1>
+        {/* Bottom 4 Bento Stat Cards - Tailored for Startups & Websites for People */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-16 sm:mt-24 w-full">
+          
+          {/* Card 1: STARTUP MVPS */}
+          <div className="rounded-2xl border border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md p-6 hover:border-[#ff6b2c]/50 transition-all duration-300 group">
+            <div className="w-12 h-12 flex items-center justify-center text-[#ff6b2c]">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7.52879 16.4712C2.59014 11.5325 0.588351 5.52715 3.05768 3.05782C5.04852 1.06697 9.33779 1.98237 13.5134 5M16.471 7.52894C21.4097 12.4676 23.4115 18.473 20.9421 20.9423C18.9535 22.931 14.6713 22.0198 10.5 19.01M20.9423 3.05768C23.4117 5.52701 21.4099 11.5324 16.4712 16.4711C11.5326 21.4097 5.5272 23.4115 3.05787 20.9422C1.06704 18.9513 1.98242 14.6621 5 10.4865C5.72528 9.48285 6.57199 8.4858 7.52899 7.5288C12.4676 2.59014 18.473 0.588345 20.9423 3.05768Z"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                />
+                <circle cx="12" cy="12" r="2.5" stroke="#FF6B2C" strokeWidth="1.3" />
+              </svg>
+            </div>
+            <div className="text-xs font-bold text-white uppercase tracking-wider mt-4 font-display">
+              STARTUP MVPS
+            </div>
+            <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+              3–7 day sprints. Investor-ready code, Stripe payments, and early validation.
+            </p>
+          </div>
 
-        {/* Sub-headline */}
-        <p className="mt-6 text-lg sm:text-xl text-neutral-400 max-w-2xl leading-relaxed">
-          Order an industry-tested, conversion-optimized template customized with your branding in 72 hours—or partner with our senior engineers to build a full-stack custom MVP from scratch.
-        </p>
+          {/* Card 2: WEBSITES FOR PEOPLE */}
+          <div className="rounded-2xl border border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md p-6 hover:border-[#ff6b2c]/50 transition-all duration-300 group">
+            <div className="w-12 h-12 flex items-center justify-center text-[#ff6b2c]">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M4.97883 6.31492C2.99294 7.10927 2 7.50645 2 8C2 8.49355 2.99294 8.89073 4.97883 9.68508L7.7873 10.8085C9.77318 11.6028 10.7661 12 12 12C13.2339 12 14.2268 11.6028 16.2127 10.8085L19.0212 9.68508C21.0071 8.89073 22 8.49355 22 8C22 7.50645 21.0071 7.10927 19.0212 6.31492L16.2127 5.19153C14.2268 4.39718 13.2339 4 12 4C11.0461 4 10.2361 4.2374 9 4.71221"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M5.76613 10L4.97883 10.3149C2.99294 11.1093 2 11.5065 2 12C2 12.4935 2.99294 12.8907 4.97883 13.6851L7.7873 14.8085C9.77318 15.6028 10.7661 16 12 16C13.2339 16 14.2268 15.6028 16.2127 14.8085L19.0212 13.6851C21.0071 12.8907 22 12.4935 22 12C22 11.5065 21.0071 11.1093 19.0212 10.3149L18.2339 10"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.3"
+                />
+                <path
+                  d="M19.0212 17.6851C21.0071 16.8907 22 16.4935 22 16C22 15.5065 21.0071 15.1093 19.0212 14.3149L18.2339 14M5.76613 14L4.97883 14.3149C2.99294 15.1093 2 15.5065 2 16C2 16.4935 2.99294 16.8907 4.97883 17.6851L7.7873 18.8085C9.77318 19.6028 10.7661 20 12 20C12.9539 20 13.7639 19.7626 15 19.2878"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+            <div className="text-xs font-bold text-white uppercase tracking-wider mt-4 font-display">
+              WEBSITES FOR PEOPLE
+            </div>
+            <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+              Bespoke web presence for doctors, clinics, creators, and private businesses in 48h.
+            </p>
+          </div>
 
-        {/* Dual Primary CTA */}
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <button
-            onClick={onExploreTemplates}
-            className="group flex items-center gap-2 rounded-lg bg-amber-400 px-6 py-3.5 text-sm font-semibold text-neutral-950 hover:bg-amber-300 active:scale-[0.98] transition-all shadow-md shadow-amber-400/20 whitespace-nowrap"
-          >
-            <span>Browse Templates & Live Demos</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </button>
+          {/* Card 3: SCALABLE APPS */}
+          <div className="rounded-2xl border border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md p-6 hover:border-[#ff6b2c]/50 transition-all duration-300 group">
+            <div className="w-12 h-12 flex items-center justify-center text-[#ff6b2c]">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="6" cy="18" r="2.5" stroke="#FF6B2C" strokeWidth="1.3" />
+                <circle cx="18" cy="6" r="2.5" stroke="#FF6B2C" strokeWidth="1.3" />
+                <circle cx="18" cy="18" r="2.5" stroke="#FF6B2C" strokeWidth="1.3" />
+                <path d="M8 16L16 8" stroke="#FF6B2C" strokeWidth="1.3" strokeLinecap="round" />
+                <path d="M8.5 18H15.5" stroke="#FF6B2C" strokeWidth="1.3" strokeLinecap="round" />
+              </svg>
+            </div>
+            <div className="text-xs font-bold text-white uppercase tracking-wider mt-4 font-display">
+              SCALABLE APPS
+            </div>
+            <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+              Auth, PostgreSQL databases, cloud image storage, and enterprise billing.
+            </p>
+          </div>
 
-          <button
-            onClick={onScopeCustomMvp}
-            className="flex items-center gap-2 rounded-lg border border-neutral-700 bg-neutral-900/80 px-6 py-3.5 text-sm font-semibold text-neutral-200 hover:border-neutral-500 hover:text-white active:scale-[0.98] transition-all whitespace-nowrap"
-          >
-            <Code2 className="w-4 h-4 text-neutral-400" />
-            <span>Scope Custom Startup MVP</span>
-          </button>
-        </div>
+          {/* Card 4: FULL CODE OWNERSHIP */}
+          <div className="rounded-2xl border border-white/10 bg-[#0d0d0d]/80 backdrop-blur-md p-6 hover:border-[#ff6b2c]/50 transition-all duration-300 group">
+            <div className="w-12 h-12 flex items-center justify-center text-[#ff6b2c]">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3V7" stroke="#FF6B2C" strokeWidth="1.3" strokeLinecap="round" />
+                <path d="M12 17V21" stroke="#FF6B2C" strokeWidth="1.3" strokeLinecap="round" />
+                <path d="M3 12H7" stroke="#FF6B2C" strokeWidth="1.3" strokeLinecap="round" />
+                <path d="M17 12H21" stroke="#FF6B2C" strokeWidth="1.3" strokeLinecap="round" />
+                <circle cx="12" cy="12" r="7" stroke="#FF6B2C" strokeWidth="1.3" />
+                <circle cx="12" cy="12" r="1.5" fill="#FF6B2C" />
+              </svg>
+            </div>
+            <div className="text-xs font-bold text-white uppercase tracking-wider mt-4 font-display">
+              100% CODE OWNERSHIP
+            </div>
+            <p className="text-xs text-zinc-400 mt-2 leading-relaxed font-sans">
+              Zero vendor lock-in. Full GitHub repository transfer and Figma design assets.
+            </p>
+          </div>
 
-        {/* Adjacent Quantitative Proof Metrics */}
-        <div className="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-4 pt-10 border-t border-neutral-800/80">
-          <div>
-            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">48–72h</div>
-            <div className="mt-1 text-xs text-neutral-400">High-Converting Landing Pages</div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">10–14 Days</div>
-            <div className="mt-1 text-xs text-neutral-400">Validated Startup MVP Sprints</div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display">Scalable Stack</div>
-            <div className="mt-1 text-xs text-neutral-400">Auth, DB, Cloud Hosting, Domain</div>
-          </div>
-          <div>
-            <div className="text-2xl sm:text-3xl font-bold text-neutral-100 font-display tabular-nums">100%</div>
-            <div className="mt-1 text-xs text-neutral-400">Code & IP Transfer on GitHub</div>
-          </div>
-        </div>
-
-        {/* Studio Hero Image Showcase Banner */}
-        <div className="mt-12 relative rounded-xl overflow-hidden border border-neutral-800 bg-neutral-900/40">
-          <div className="aspect-[21/9] sm:aspect-[24/9] w-full overflow-hidden">
-            <img
-              src="/src/assets/images/hero_studio_workspace_1790699149931.jpg"
-              alt="Vektora Design & Engineering Studio Workspace"
-              referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center filter brightness-[0.88] hover:scale-105 transition-transform duration-700"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/30 to-transparent pointer-events-none" />
-          <div className="absolute bottom-4 left-6 right-6 flex items-center justify-between text-xs text-neutral-300">
-            <span className="font-medium text-neutral-200">Engineered with React 19, Next.js, Tailwind CSS & Supabase</span>
-            <span className="hidden sm:inline text-neutral-400">Production-ready code delivered directly to your Git repository</span>
-          </div>
         </div>
 
       </div>

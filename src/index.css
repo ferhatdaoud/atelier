@@ -1,33 +1,134 @@
 @import "tailwindcss";
 
+/* Exact Fleety Webflow Template Custom Fonts */
+@font-face {
+  font-family: 'Ztnature';
+  src: url('https://cdn.prod.website-files.com/69cbe4075fb541f3bcec61c7/69cbe4075fb541f3bcec655b_ZTNature-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ztnature';
+  src: url('https://cdn.prod.website-files.com/69cbe4075fb541f3bcec61c7/69cbe4075fb541f3bcec6559_ZTNature-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ztnature';
+  src: url('https://cdn.prod.website-files.com/69cbe4075fb541f3bcec61c7/69cbe4075fb541f3bcec64e3_ZTNature-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neutralsans';
+  src: url('https://cdn.prod.website-files.com/69cbe4075fb541f3bcec61c7/69cbe4075fb541f3bcec645e_NeutralSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neutralsans Meidum';
+  src: url('https://cdn.prod.website-files.com/69cbe4075fb541f3bcec61c7/69cbe4075fb541f3bcec645c_NeutralSans-Meidum.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neutralsans';
+  src: url('https://cdn.prod.website-files.com/69cbe4075fb541f3bcec61c7/69cbe4075fb541f3bcec645b_NeutralSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
-  --font-display: 'Outfit', 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-/* Font theme variants */
-[data-font="cabinet"] {
-  --font-display: 'Cabinet Grotesk', 'Plus Jakarta Sans', sans-serif;
-  --font-sans: 'Satoshi', 'Plus Jakarta Sans', sans-serif;
-}
-
-[data-font="outfit"] {
-  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-[data-font="jakarta"] {
-  --font-display: 'Plus Jakarta Sans', sans-serif;
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-display: 'Neutralsans Meidum', 'Neutralsans', 'Ztnature', Impact, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
   font-family: var(--font-sans);
-  letter-spacing: -0.01em;
+  background-color: #080808;
+  color: #b9b9b9;
+  letter-spacing: -0.015em;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.025em;
+  color: #ffffff;
+  letter-spacing: -0.02em;
 }
 
+/* Fleety Glass & Orange Accent utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: #0d0d0d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 107, 44, 0.4);
+  transform: translateY(-2px);
+}
+
+.fleety-orange {
+  color: #ff6b2c;
+}
+
+.fleety-bg-orange {
+  background-color: #ff6b2c;
+}
+
+.fleety-border-orange {
+  border-color: #ff6b2c;
+}
+
+.fleety-glow {
+  text-shadow: 0 0 25px rgba(255, 107, 44, 0.45);
+}
+
+.fleety-button {
+  background-color: #ff6b2c;
+  color: #ffffff;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fleety-button:hover {
+  background-color: #ff824d;
+  box-shadow: 0 0 30px rgba(255, 107, 44, 0.5);
+  transform: translateY(-1px);
+}
+
+.divisor-orange {
+  height: 2px;
+  background: linear-gradient(90deg, #ff6b2c 0%, rgba(255, 107, 44, 0.2) 100%);
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

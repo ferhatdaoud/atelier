@@ -1,188 +1,102 @@
 import React, { useState } from 'react';
-import { Menu, X, Type, ChevronDown } from 'lucide-react';
-
-export type FontTheme = 'outfit' | 'cabinet' | 'jakarta';
+import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   onOpenOrderModal: () => void;
-  fontTheme: FontTheme;
-  onChangeFontTheme: (theme: FontTheme) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
-  onOpenOrderModal,
-  fontTheme,
-  onChangeFontTheme
-}) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [fontMenuOpen, setFontMenuOpen] = useState(false);
-
-  const fontOptions: { id: FontTheme; label: string; sub: string }[] = [
-    { id: 'outfit', label: 'Outfit (Modern Tech)', sub: 'Sleek SaaS & Startup aesthetic' },
-    { id: 'cabinet', label: 'Cabinet Grotesk', sub: 'Punchy editorial agency style' },
-    { id: 'jakarta', label: 'Plus Jakarta Sans', sub: 'Crisp clinical & tech precision' }
-  ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-800/80 bg-neutral-950/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        
-        {/* Zone 1: Brand Wordmark (Single text element) */}
-        <a 
-          href="#" 
-          className="text-xl font-bold tracking-tight text-neutral-100 hover:text-amber-400 transition-colors font-display"
-        >
-          Vektora Studio
+    <header className="absolute top-0 inset-x-0 z-50 flex items-center justify-between px-6 sm:px-12 lg:px-16 pt-8 pb-4">
+      {/* Brand logo: KZFR */}
+      <a 
+        href="#" 
+        className="flex items-center gap-2.5 text-white hover:opacity-90 transition-opacity"
+        aria-label="KZFR Web Development Studio"
+      >
+        <svg width="130" height="28" viewBox="0 0 200 42" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-6 sm:h-7 w-auto">
+          {/* Stylized K / geometric mark */}
+          <path d="M6 6H13V36H6V6Z" fill="#ff6b2c"/>
+          <path d="M14 21L27 6H36L21 21L36 36H27L14 21Z" fill="#FFFFFF"/>
+          {/* Wordmark KZFR */}
+          <text x="46" y="30" fill="#FFFFFF" fontFamily="var(--font-display), Inter, sans-serif" fontSize="26" fontWeight="900" letterSpacing="3">KZFR</text>
+        </svg>
+      </a>
+
+      {/* Nav links on right */}
+      <nav className="hidden md:flex items-center gap-8 lg:gap-10 text-xs font-bold tracking-widest uppercase">
+        <a href="#home" className="text-[#ff6b2c] hover:text-[#ff824d] transition-colors">
+          HOME
         </a>
+        <a href="#about" className="text-white hover:text-[#ff6b2c] transition-colors">
+          ABOUT
+        </a>
+        <a href="#work" className="text-white hover:text-[#ff6b2c] transition-colors">
+          WORKS
+        </a>
+        <a href="#pricing" className="text-white hover:text-[#ff6b2c] transition-colors">
+          PRICING
+        </a>
+        <button
+          onClick={onOpenOrderModal}
+          className="text-white hover:text-[#ff6b2c] transition-colors uppercase tracking-widest text-xs font-bold"
+        >
+          CONTACT
+        </button>
+      </nav>
 
-        {/* Zone 2: 4-5 Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
-          <a href="#templates" className="hover:text-neutral-100 transition-colors">
-            Templates & Examples
-          </a>
-          <a href="#startup-mvp" className="hover:text-neutral-100 transition-colors">
-            Startup MVP Lab
-          </a>
-          <a href="#doctor-cabinets" className="hover:text-neutral-100 transition-colors">
-            Doctor Cabinets
-          </a>
-          <a href="#pricing" className="hover:text-neutral-100 transition-colors">
-            Pricing
-          </a>
-          <a href="#process" className="hover:text-neutral-100 transition-colors">
-            How It Works
-          </a>
-        </nav>
-
-        {/* Zone 3: Actions + Font Switcher */}
-        <div className="flex items-center gap-2.5">
-          
-          {/* Interactive Font Selector */}
-          <div className="relative">
-            <button
-              onClick={() => setFontMenuOpen(!fontMenuOpen)}
-              className="flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900/60 px-2.5 py-2 text-xs font-medium text-neutral-300 hover:border-neutral-700 hover:text-white transition-colors"
-              title="Change Typography Style"
-            >
-              <Type className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden lg:inline capitalize">
-                {fontTheme === 'outfit' ? 'Outfit' : fontTheme === 'cabinet' ? 'Cabinet' : 'Jakarta'}
-              </span>
-              <ChevronDown className="w-3 h-3 text-neutral-500" />
-            </button>
-
-            {fontMenuOpen && (
-              <>
-                <div className="fixed inset-0 z-10" onClick={() => setFontMenuOpen(false)} />
-                <div className="absolute right-0 mt-2 w-56 rounded-xl border border-neutral-800 bg-neutral-900 p-1.5 shadow-2xl z-20">
-                  <div className="px-3 py-1.5 text-[11px] font-semibold text-neutral-400 uppercase tracking-wider border-b border-neutral-800/80 mb-1">
-                    Select Typography
-                  </div>
-                  {fontOptions.map((opt) => (
-                    <button
-                      key={opt.id}
-                      onClick={() => {
-                        onChangeFontTheme(opt.id);
-                        setFontMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-colors flex flex-col ${
-                        fontTheme === opt.id
-                          ? 'bg-neutral-800 text-amber-400 font-semibold'
-                          : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white'
-                      }`}
-                    >
-                      <span>{opt.label}</span>
-                      <span className="text-[10px] text-neutral-400 font-normal">{opt.sub}</span>
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-
-          <button
-            onClick={onOpenOrderModal}
-            className="rounded-lg bg-amber-400 px-4 py-2 text-xs font-semibold text-neutral-950 hover:bg-amber-300 active:scale-[0.98] transition-all whitespace-nowrap shadow-sm shadow-amber-400/20"
-          >
-            Start Project
-          </button>
-
-          {/* Mobile menu trigger */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-neutral-400 hover:text-neutral-100"
-            aria-label="Toggle Navigation Menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
+      {/* Mobile menu trigger */}
+      <div className="md:hidden flex items-center gap-3">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="p-2 rounded-lg border border-white/10 text-zinc-300 hover:text-white"
+          aria-label="Toggle Navigation"
+        >
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
       </div>
 
       {/* Mobile dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-neutral-800 bg-neutral-950 px-4 py-4 space-y-3">
+        <div className="absolute top-20 inset-x-4 rounded-2xl glass-card bg-[#0d0d0d]/95 p-6 border border-white/15 space-y-4 text-center shadow-2xl z-50">
           <a 
-            href="#templates" 
+            href="#home" 
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
+            className="block text-xs font-bold tracking-widest uppercase text-[#ff6b2c]"
           >
-            Templates & Examples
+            HOME
           </a>
           <a 
-            href="#startup-mvp" 
+            href="#about" 
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
+            className="block text-xs font-bold tracking-widest uppercase text-white hover:text-[#ff6b2c]"
           >
-            Startup MVP Lab
+            ABOUT
           </a>
           <a 
-            href="#doctor-cabinets" 
+            href="#work" 
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
+            className="block text-xs font-bold tracking-widest uppercase text-white hover:text-[#ff6b2c]"
           >
-            Doctor Cabinets
+            WORKS
           </a>
           <a 
             href="#pricing" 
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
+            className="block text-xs font-bold tracking-widest uppercase text-white hover:text-[#ff6b2c]"
           >
-            Pricing
+            PRICING
           </a>
-          <a 
-            href="#process" 
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-neutral-300 hover:text-amber-400"
+          <button
+            onClick={() => { setMobileMenuOpen(false); onOpenOrderModal(); }}
+            className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#ff6b2c] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-[#ff6b2c]/20"
           >
-            How It Works
-          </a>
-
-          {/* Mobile font switcher */}
-          <div className="pt-3 border-t border-neutral-800">
-            <div className="text-xs text-neutral-400 mb-2 font-medium">Select Typography:</div>
-            <div className="flex gap-2">
-              {fontOptions.map((opt) => (
-                <button
-                  key={opt.id}
-                  onClick={() => {
-                    onChangeFontTheme(opt.id);
-                    setMobileMenuOpen(false);
-                  }}
-                  className={`px-3 py-1.5 rounded text-xs font-medium border ${
-                    fontTheme === opt.id
-                      ? 'border-amber-400 bg-amber-400/10 text-amber-400'
-                      : 'border-neutral-800 text-neutral-400'
-                  }`}
-                >
-                  {opt.id === 'outfit' ? 'Outfit' : opt.id === 'cabinet' ? 'Cabinet' : 'Jakarta'}
-                </button>
-              ))}
-            </div>
-          </div>
+            <span>LET'S TALK</span>
+          </button>
         </div>
       )}
     </header>
   );
 };
-
-
