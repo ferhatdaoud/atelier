@@ -51,7 +51,7 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({
 
   return (
     <section id="work" className="py-24 sm:py-36 relative bg-[#000000]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-[90vw] max-w-[1440px] mx-auto px-0">
         
         {/* Centered Section Header matching screenshot */}
         <div className="text-center mb-16 sm:mb-20">

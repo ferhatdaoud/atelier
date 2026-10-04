@@ -16,8 +16,8 @@ export const Footer: React.FC<FooterProps> = ({ onStartProject }) => {
   };
 
   return (
-    <footer className="bg-white text-black py-16 sm:py-24 px-6 sm:px-12 lg:px-16 selection:bg-[#ff6b2c] selection:text-white">
-      <div className="mx-auto max-w-7xl flex flex-col justify-between min-h-[460px]">
+    <footer className="bg-white text-black py-16 sm:py-24 px-4 sm:px-8 selection:bg-[#ff6b2c] selection:text-white">
+      <div className="w-[90vw] max-w-[1440px] mx-auto flex flex-col justify-between min-h-[460px]">
         
         {/* Top Header Row: High-Impact Copy & Direct Touchpoint */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-4">

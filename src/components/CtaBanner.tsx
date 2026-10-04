@@ -9,7 +9,7 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onStartProject }) => {
     <section 
       className="relative min-h-[500px] sm:min-h-[580px] flex items-center justify-center overflow-hidden bg-[#000000] py-24"
       style={{
-        backgroundImage: `url('/images/home-hero-bg.jpg')`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.45)), url('/images/home-hero-user.jpg')`,
         backgroundPosition: 'center center',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover'
