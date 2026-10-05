@@ -3,9 +3,10 @@ import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   onOpenOrderModal: () => void;
+  onOpenContact: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal, onOpenContact }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -39,7 +40,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
             WORKS
           </a>
           <button
-            onClick={onOpenOrderModal}
+            onClick={onOpenContact}
             className="hover:text-white transition-colors uppercase tracking-[0.14em]"
           >
             CONTACT
@@ -86,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
           <button
             onClick={() => {
               setMobileMenuOpen(false);
-              onOpenOrderModal();
+              onOpenContact();
             }}
             className="block text-left text-zinc-400 hover:text-white uppercase tracking-widest w-full"
           >

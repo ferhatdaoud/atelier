@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Exact Fleety Webflow Template Custom Fonts */
 @font-face {
   font-family: 'Ztnature';

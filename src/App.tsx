@@ -11,6 +11,7 @@ import { CtaBanner } from './components/CtaBanner';
 import { Footer } from './components/Footer';
 import { LiveTemplateModal } from './components/LiveTemplateModal';
 import { OrderTemplateModal } from './components/OrderTemplateModal';
+import { ContactPage } from './components/ContactPage';
 import { TEMPLATES } from './data/templates';
 import { TemplateItem, ClientOrder } from './types';
 
@@ -18,6 +19,7 @@ export default function App() {
   // Modals & configuration
   const [activeDemoTemplate, setActiveDemoTemplate] = useState<TemplateItem | null>(null);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [selectedOrderTemplate, setSelectedOrderTemplate] = useState<TemplateItem | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<'landing' | 'mvp' | 'full-app'>('mvp');
   const [isCustomMvpMode, setIsCustomMvpMode] = useState(false);
@@ -25,10 +27,6 @@ export default function App() {
   const [customScopeSummary, setCustomScopeSummary] = useState<string[]>([]);
 
   // Handlers
-  const handleOpenDemo = (template: TemplateItem) => {
-    setActiveDemoTemplate(template);
-  };
-
   const handleOrderTemplate = (template: TemplateItem) => {
     setSelectedOrderTemplate(template);
     if (template.category === 'medical-clinic') {
@@ -54,8 +52,8 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#080808] text-[#f4f4f5] flex flex-col font-sans selection:bg-[#ff6b2c] selection:text-white">
       
-      {/* 1. Navbar with KZFR Logo & LET'S TALK */}
-      <Navbar onOpenOrderModal={() => handleStartPackageProject('mvp')} />
+      {/* 1. Navbar with KZFR Logo & CONTACT */}
+      <Navbar onOpenOrderModal={() => handleStartPackageProject('mvp')} onOpenContact={() => setIsContactModalOpen(true)} />
 
       {/* Main Content */}
       <main className="flex-1">
@@ -89,7 +87,7 @@ export default function App() {
         {/* 7. Our Impact & Metrics Section with In-Section CTA */}
         <ImpactMetrics onStartProject={() => handleStartPackageProject('mvp')} />
 
-        {/* 8. Pricing Plans (Landing Page $590, MVP $1,850, Full Scalable App $3,600+) */}
+        {/* 8. Pricing Plans (Landing Page 12,000 DA, MVP 30,000 DA, Full Scalable App 60,000+ DA) */}
         <ProcessTimeline onStartProject={handleStartPackageProject} />
 
         {/* 9. Dynamic Questions & Answers (FAQ) */}
@@ -124,6 +122,11 @@ export default function App() {
         customScopeSummary={customScopeSummary}
         onOrderSubmitted={handleOrderSubmitted}
       />
+
+      {/* Contact Page Modal */}
+      {isContactModalOpen && (
+        <ContactPage onClose={() => setIsContactModalOpen(false)} />
+      )}
 
     </div>
   );
