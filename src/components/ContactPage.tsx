@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, MapPin, Send, X } from 'lucide-react';
 
 interface ContactPageProps {
-  git onClose: () => void;
+  gitonClose: () => void;
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
