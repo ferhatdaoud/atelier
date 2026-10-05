@@ -36,8 +36,8 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
 
               {/* Price */}
               <div className="mt-6 flex items-baseline gap-1">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white font-display tabular-nums">$590</span>
-                <span className="text-xs text-zinc-400 font-mono">/launch</span>
+                <span className="text-4xl sm:text-5xl font-extrabold text-white font-display tabular-nums">12,000</span>
+                <span className="text-xs text-zinc-400 font-mono">DA / lancement</span>
               </div>
 
               {/* Checklist */}
@@ -52,25 +52,13 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
                   <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
                     <Check className="h-3 w-3 text-white" />
                   </div>
-                  <span>Appointment booking / lead forms</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
-                    <Check className="h-3 w-3 text-white" />
-                  </div>
-                  <span>Custom domain & SSL setup</span>
+                  <span>100% design & asset ownership</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
                     <Check className="h-3 w-3 text-white" />
                   </div>
                   <span>Turnkey live delivery in 48–72h</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-white/20 bg-white/5">
-                    <Check className="h-3 w-3 text-white" />
-                  </div>
-                  <span>100% design & asset ownership</span>
                 </li>
               </ul>
             </div>
@@ -104,8 +92,8 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
 
               {/* Price */}
               <div className="mt-6 flex items-baseline gap-1">
-                <span className="text-4xl sm:text-5xl font-extrabold text-[#ff6b2c] font-display tabular-nums">$1,850</span>
-                <span className="text-xs text-zinc-400 font-mono">/sprint</span>
+                <span className="text-4xl sm:text-5xl font-extrabold text-[#ff6b2c] font-display tabular-nums">30,000</span>
+                <span className="text-xs text-zinc-400 font-mono">DA / sprint</span>
               </div>
 
               {/* Checklist */}
@@ -126,7 +114,7 @@ export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject
                   <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[#ff6b2c] bg-[#ff6b2c]">
                     <Check className="h-3 w-3 text-white" />
                   </div>
-                  <span>Stripe payments & checkout flow</span>
+                  <span>Chargili payments & checkout flow</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <div className="flex h-4 w-4 shrink-0 items-center justify-center rounded border border-[#ff6b2c] bg-[#ff6b2c]">

@@ -54,7 +54,7 @@ export interface ClientOrder {
 export interface MvpScopeOption {
   productType: 'saas' | 'marketplace' | 'ai-tool' | 'mobile-pwa';
   authType: 'simple' | 'rbac';
-  payments: 'none' | 'stripe-basic' | 'stripe-sub';
+  payments: 'none' | 'chargili-basic' | 'chargili-sub';
   database: 'supabase' | 'realtime';
   aiIntegration: 'none' | 'basic-llm' | 'advanced-rag';
   speed: 'standard' | 'rush';

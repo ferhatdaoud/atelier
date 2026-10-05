@@ -39,7 +39,7 @@ export const ServicesBento: React.FC = () => {
       subtitle: 'Clean Next.js architecture built to scale.',
       bullets: [
         'Full code ownership',
-        'Stripe & user auth',
+        'Chargili & user auth',
         'Sub-second performance'
       ]
     }

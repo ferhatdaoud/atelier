@@ -80,7 +80,6 @@ export default function App() {
         {/* 5. Featured Projects (Portfolio Grid / Bento with Divisor & Cases) */}
         <FeaturedWork
           templates={TEMPLATES}
-          onOpenDemo={handleOpenDemo}
           onOrderTemplate={handleOrderTemplate}
         />
 

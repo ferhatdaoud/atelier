@@ -96,7 +96,7 @@ export const LiveTemplateModal: React.FC<LiveTemplateModalProps> = ({
         <div className="flex items-center gap-3">
           <div className="hidden md:block text-right">
             <div className="text-[11px] text-zinc-400 font-mono">Turnaround: {template.turnaroundTime}</div>
-            <div className="text-xs font-bold text-white tabular-nums">${template.turnkeyPrice} Turnkey</div>
+            <div className="text-xs font-bold text-white tabular-nums">{template.turnkeyPrice.toLocaleString()} DA Turnkey</div>
           </div>
           <button
             onClick={() => onOrder(template)}

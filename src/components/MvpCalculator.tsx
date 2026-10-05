@@ -9,7 +9,7 @@ export const MvpCalculator: React.FC<MvpCalculatorProps> = ({ onScopeCustomMvp }
   // Config state
   const [productType, setProductType] = useState<'saas' | 'marketplace' | 'ai-tool' | 'mobile-pwa'>('saas');
   const [authType, setAuthType] = useState<'simple' | 'rbac'>('simple');
-  const [payments, setPayments] = useState<'none' | 'stripe-basic' | 'stripe-sub'>('stripe-sub');
+  const [payments, setPayments] = useState<'none' | 'chargili-basic' | 'chargili-sub'>('chargili-sub');
   const [database, setDatabase] = useState<'supabase' | 'realtime'>('supabase');
   const [aiIntegration, setAiIntegration] = useState<'none' | 'gemini' | 'advanced-rag'>('gemini');
   const [speed, setSpeed] = useState<'standard' | 'rush'>('standard');
@@ -42,13 +42,13 @@ export const MvpCalculator: React.FC<MvpCalculatorProps> = ({ onScopeCustomMvp }
     summary.push('Standard Supabase / Firebase Auth');
   }
 
-  if (payments === 'stripe-basic') {
+  if (payments === 'chargili-basic') {
     basePrice += 300;
-    summary.push('Stripe One-Time Checkout');
-  } else if (payments === 'stripe-sub') {
+    summary.push('Chargili One-Time Checkout');
+  } else if (payments === 'chargili-sub') {
     basePrice += 550;
     deliveryDays += 1;
-    summary.push('Stripe Recurring Tier Subscriptions & Webhooks');
+    summary.push('Chargili Recurring Tier Subscriptions & Webhooks');
   }
 
   if (database === 'realtime') {
@@ -190,8 +190,8 @@ export const MvpCalculator: React.FC<MvpCalculatorProps> = ({ onScopeCustomMvp }
               </label>
               <div className="space-y-2">
                 {[
-                  { id: 'stripe-sub', label: 'Stripe Subscriptions & Portal', sub: 'Tiered billing, invoices & webhooks (+$550)' },
-                  { id: 'stripe-basic', label: 'One-Time Checkout', sub: 'Simple paywall or consultation fee (+$300)' },
+                  { id: 'chargili-sub', label: 'Chargili Subscriptions & Portal', sub: 'Tiered billing, invoices & webhooks (+$550)' },
+                  { id: 'chargili-basic', label: 'One-Time Checkout', sub: 'Simple paywall or consultation fee (+$300)' },
                   { id: 'none', label: 'Free / Pre-Revenue Validation', sub: 'Waitlist & self-serve signup (+$0)' }
                 ].map((item) => (
                   <button

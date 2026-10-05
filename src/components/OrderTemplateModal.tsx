@@ -58,13 +58,13 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
   if (!isOpen) return null;
 
   // Calculate pricing based on package
-  let basePrice = 1850;
+  let basePrice = 30000;
   if (packageType === 'landing') {
-    basePrice = 590;
+    basePrice = 12000;
   } else if (packageType === 'mvp') {
-    basePrice = isCustomMvpMode ? customScopeTotal : 1850;
+    basePrice = isCustomMvpMode ? customScopeTotal : 30000;
   } else if (packageType === 'full-app') {
-    basePrice = 3600;
+    basePrice = 60000;
   }
 
   const addonsTotal = selectedAddons.reduce((acc, addonId) => {
@@ -180,16 +180,16 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                         : 'border-white/10 bg-white/[0.02] hover:border-white/20'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-xs font-bold text-white">01. High-Converting Landing Page</span>
-                        <div className="text-[11px] text-zinc-400 mt-0.5">Clinics, Cabinets, Waitlists, & Portfolios</div>
-                      </div>
-                      <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">$590</span>
-                    </div>
-                    <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
-                      Custom tailored responsive design, appointment booking / lead form, custom domain with SSL, and local SEO setup in 48–72h.
-                    </p>
+<div className="flex items-center justify-between">
+                       <div>
+                         <span className="text-xs font-bold text-white">01. High-Converting Landing Page</span>
+                         <div className="text-[11px] text-zinc-400 mt-0.5">Clinics, Cabinets, Waitlists, & Portfolios</div>
+                       </div>
+                       <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">12,000 DA</span>
+                     </div>
+                     <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
+                       Custom tailored responsive design, lead form, and local SEO setup in 48–72h.
+                     </p>
                   </div>
 
                   {/* Package 2: Startup MVP Sprint */}
@@ -210,12 +210,12 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                         <div className="text-[11px] text-zinc-400 mt-0.5">Rapid 3–7 day build for early validation & pitching</div>
                       </div>
                       <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">
-                        ${isCustomMvpMode ? customScopeTotal : 1850}
+                        {isCustomMvpMode ? customScopeTotal : 30000} DA
                       </span>
                     </div>
-                    <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
-                      Core user workflows, Next.js 15 + Tailwind stack, Stripe payments/checkout, interactive analytics or user journey, and 100% GitHub code transfer.
-                    </p>
+<p className="mt-2 text-xs text-zinc-400 leading-relaxed">
+                       Core user workflows, Next.js 15 + Tailwind stack, Chargili payments/checkout, interactive analytics or user journey, and 100% GitHub code transfer.
+                     </p>
                   </div>
 
                   {/* Package 3: Full Scalable Web Application */}
@@ -232,10 +232,10 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                         <span className="text-xs font-bold text-white">03. Full Scalable Web Application</span>
                         <div className="text-[11px] text-zinc-400 mt-0.5">Production-ready platform & SaaS</div>
                       </div>
-                      <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">$3,600+</span>
+                      <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">60,000+ DA</span>
                     </div>
                     <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
-                      Complete architecture with Multi-user Login Auth, Scalable PostgreSQL/Supabase Database, Cloud Image & Asset Hosting, Custom Domain with Global CDN, and Stripe Subscriptions.
+                      Complete architecture with Multi-user Login Auth, Scalable PostgreSQL/Supabase Database, Cloud Image & Asset Hosting, Custom Domain with Global CDN, and Chargili Subscriptions.
                     </p>
                   </div>
 
@@ -285,7 +285,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                 <div>
                   <div className="text-xs text-zinc-400">Total Project Estimate</div>
                   <div className="text-2xl font-bold text-white font-display tabular-nums">
-                    ${totalPrice}
+                    {totalPrice.toLocaleString()} DA
                   </div>
                 </div>
 
@@ -391,7 +391,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Share any details, special integrations (e.g. Calendly, Stripe, WhatsApp), or links to your current website/docs..."
+                  placeholder="Share any details, special integrations (e.g. Calendly, Chargili, WhatsApp), or links to your current website/docs..."
                   className="w-full rounded-xl border border-white/15 bg-black px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-[#ff6b2c] focus:outline-none resize-none"
                 />
               </div>
