@@ -16,7 +16,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#080808] overflow-y-auto text-white">
+    <div className="fixed inset-0 z-50 overflow-y-auto text-white">
+      {/* Background matching Hero section */}
+      <div 
+        aria-hidden="true" 
+        className="pointer-events-none absolute inset-0 z-0 bg-cover bg-no-repeat"
+        style={{          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.35)), url('/images/home-hero-user.jpg')`,
+          backgroundPosition: 'center center',
+          backgroundSize: 'cover'
+        }}
+      />
       <header className="flex h-16 items-center justify-between px-6 border-b border-white/10">
         <button onClick={onClose} className="text-zinc-400 hover:text-white flex items-center gap-2">
           <X className="w-5 h-5" /> Close
@@ -54,3 +63,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
     </div>
   );
 };
+
+// Add this new Hero-style background to ContactPage
+getComputedStyle(document.documentElement).setProperty('--hero-bg-image', 'url(\'/images/home-hero-user.jpg\')');

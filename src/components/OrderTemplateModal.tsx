@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { TemplateItem, ClientOrder } from '../types';
-import { ORDER_ADDONS } from '../data/templates';
 import { X, Check, ArrowRight, ShieldCheck, Clock, FileText, CheckCircle2 } from 'lucide-react';
 
 interface OrderTemplateModalProps {
@@ -67,20 +66,9 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
     basePrice = 60000;
   }
 
-  const addonsTotal = selectedAddons.reduce((acc, addonId) => {
-    if (addonId === 'brand-colors') return acc;
-    const addon = ORDER_ADDONS.find(a => a.id === addonId);
-    return acc + (addon ? addon.price : 0);
-  }, 0);
+  const addonsTotal = 0; // No addons
 
-  const totalPrice = basePrice + (packageType === 'full-app' ? 0 : addonsTotal);
-
-  const toggleAddon = (id: string) => {
-    if (id === 'brand-colors') return; // Always included
-    setSelectedAddons(prev => 
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
-    );
-  };
+  const totalPrice = basePrice;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,7 +92,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
       industry: industry || (selectedTemplate?.categoryLabel || 'General Business'),
       hasBranding,
       timeline,
-      selectedAddons,
+      selectedAddons: [], // No addons
       totalPrice,
       notes,
       status: 'In Review',
@@ -241,44 +229,6 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
 
                 </div>
               </div>
-
-              {/* OPTIONAL ADDONS */}
-              {packageType !== 'full-app' && (
-                <div>
-                  <label className="block text-xs font-semibold text-zinc-300 mb-2">Optional Integrations</label>
-                  <div className="space-y-2">
-                    {ORDER_ADDONS.filter(a => a.id !== 'brand-colors').map((addon) => {
-                      const isSelected = selectedAddons.includes(addon.id);
-                      return (
-                        <div
-                          key={addon.id}
-                          onClick={() => toggleAddon(addon.id)}
-                          className={`flex items-start justify-between rounded-xl border p-3 cursor-pointer transition-colors ${
-                            isSelected
-                              ? 'border-[#ff6b2c]/60 bg-black'
-                              : 'border-white/10 bg-white/[0.02] hover:border-white/20'
-                          }`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <div className={`mt-0.5 flex h-4 w-4 items-center justify-center rounded border ${
-                              isSelected ? 'border-[#ff6b2c] bg-[#ff6b2c] text-white' : 'border-zinc-600'
-                            }`}>
-                              {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
-                            </div>
-                            <div>
-                              <div className="text-xs font-medium text-zinc-200">{addon.label}</div>
-                              <div className="text-[11px] text-zinc-400 leading-tight">{addon.description}</div>
-                            </div>
-                          </div>
-                          <div className="text-xs font-semibold text-zinc-300 tabular-nums shrink-0 ml-3">
-                            +${addon.price}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
 
               {/* Total Calculation & Next Button */}
               <div className="pt-4 border-t border-white/10 flex items-center justify-between">
