@@ -1,27 +1,24 @@
-import React from 'react';
+import React from "react";
 
 interface HeroProps {
   onExploreWork: () => void;
   onBookCall: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({
-  onExploreWork,
-  onBookCall
-}) => {
+export const Hero: React.FC<HeroProps> = ({ onExploreWork, onBookCall }) => {
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       className="relative min-h-screen flex flex-col justify-between pt-28 sm:pt-36 pb-12 overflow-hidden bg-[#000000]"
     >
       {/* Background Layer: High-Res Fiery Curves matching user uploaded image */}
-      <div 
-        aria-hidden="true" 
+      <div
+        aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 bg-cover bg-no-repeat"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.35)), url('/images/home-hero-user.jpg')`,
-          backgroundPosition: 'center center',
-          backgroundSize: 'cover'
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
         }}
       />
 
@@ -47,7 +44,13 @@ export const Hero: React.FC<HeroProps> = ({
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <filter id="ambientSpread" x="-100%" y="-100%" width="300%" height="300%">
+          <filter
+            id="ambientSpread"
+            x="-100%"
+            y="-100%"
+            width="300%"
+            height="300%"
+          >
             <feGaussianBlur stdDeviation="65" />
           </filter>
         </defs>
@@ -113,10 +116,8 @@ export const Hero: React.FC<HeroProps> = ({
 
       {/* Main Content Wrap matching Fleety's width: 90vw; max-width: 1440px; margin: 0 auto; */}
       <div className="relative z-10 w-[90vw] max-w-[1440px] mx-auto flex-1 flex flex-col justify-between">
-        
         {/* Hero Texts Container matching Fleety structure */}
         <div className="pt-6 sm:pt-12 max-w-4xl">
-          
           {/* Top Label matching Fleety .text12px */}
           <div className="mb-4 sm:mb-5">
             <span className="text-[#ff8142] text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase font-mono">
@@ -132,7 +133,9 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Subtitle matching Fleety .text-wrap.mw-425 */}
           <p className="mt-5 text-sm sm:text-base md:text-[16px] text-zinc-300 max-w-[420px] leading-[1.65] font-sans font-normal">
-            We combine rapid engineering, modern design and scalable architecture to build digital experiences that inspire action and fuel growth.
+            We combine rapid engineering, modern design and scalable
+            architecture to build digital experiences that inspire action and
+            fuel growth.
           </p>
 
           {/* Primary Action Button matching Fleety .buttoncontact */}
@@ -142,15 +145,15 @@ export const Hero: React.FC<HeroProps> = ({
               className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#ff6b2c] to-[#ff824d] px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-[0_0_35px_rgba(255,107,44,0.45)] border border-black/20 hover:opacity-95 transition-all hover:scale-105 active:scale-95"
             >
               <span>LET'S TALK</span>
-              <svg 
-                width="14" 
-                height="14" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                xmlns="http://www.w3.org/2000/svg" 
-                stroke="currentColor" 
-                strokeWidth="2.2" 
-                strokeLinecap="round" 
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
                 strokeLinejoin="round"
                 className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               >
@@ -158,59 +161,32 @@ export const Hero: React.FC<HeroProps> = ({
               </svg>
             </button>
           </div>
-
-          {/* Trusted By Partner Logos matching Fleety .partnerscontainer */}
-          <div className="mt-12 pt-4">
-            <div className="text-[11px] font-sans text-zinc-400 uppercase tracking-widest mb-3 font-medium">
-              TRUSTED BY
-            </div>
-            <div className="flex items-center gap-8 sm:gap-12 text-zinc-400 overflow-x-auto py-1 scrollbar-none">
-              
-              {/* Partner 1: NOVARA */}
-              <div className="flex items-center gap-2.5 hover:text-white transition-colors cursor-default opacity-85 hover:opacity-100">
-                <svg width="24" height="24" viewBox="0 0 76 42" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                  <path d="M36 5C36 2.79086 37.7909 1 40 1H58C64.6274 1 70 6.37258 70 13V13C70 16.1826 68.7357 19.2348 66.4853 21.4853L50 38L36 24V5Z" fill="currentColor"/>
-                  <path d="M6 29C6 25.8174 7.26428 22.7652 9.51472 20.5147L26 4L40 18V37C40 39.2091 38.2091 41 36 41H18C11.3726 41 6 35.6274 6 29V29Z" fill="currentColor"/>
-                </svg>
-                <span className="font-display font-bold text-xs tracking-wider uppercase text-zinc-300">NOVARA</span>
-              </div>
-
-              {/* Partner 2: VELIX */}
-              <div className="flex items-center gap-2.5 hover:text-white transition-colors cursor-default opacity-85 hover:opacity-100">
-                <svg width="24" height="24" viewBox="0 0 64 42" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                  <path d="M21 2L38 19L21 36L4 19L21 2Z" fill="currentColor"/>
-                  <path d="M42 2L59 19L42 36L25 19L42 2Z" fill="currentColor" opacity="0.75"/>
-                </svg>
-                <span className="font-display font-bold text-xs tracking-wider uppercase text-zinc-300">VELIX</span>
-              </div>
-
-              {/* Partner 3: KLYRO */}
-              <div className="flex items-center gap-2.5 hover:text-white transition-colors cursor-default opacity-85 hover:opacity-100">
-                <svg width="22" height="22" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-                  <rect x="4" y="4" width="34" height="34" rx="10" fill="currentColor"/>
-                  <path d="M18 13L29 21L18 29V13Z" fill="#000000"/>
-                </svg>
-                <span className="font-display font-bold text-xs tracking-wider uppercase text-zinc-300">KLYRO</span>
-              </div>
-
-            </div>
-          </div>
-
         </div>
 
         {/* 4 Bottom Cards matching Fleety .statwrapper.hero */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-16 sm:mt-24 w-full">
-          
           {/* Card 1: STRATEGIC DESIGN */}
           <div className="rounded-[22px] border border-[#ff6b2c]/20 bg-white/[0.03] backdrop-blur-[30px] p-6 hover:border-[#ff6b2c]/50 hover:bg-white/[0.05] transition-all duration-300 group">
             <div className="w-12 h-12 flex items-center justify-start text-[#ff6b2c]">
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="44"
+                height="44"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <defs>
-                  <filter id="fleetyGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                  <filter
+                    id="fleetyGlow"
+                    x="-20%"
+                    y="-20%"
+                    width="140%"
+                    height="140%"
+                  >
+                    <feGaussianBlur stdDeviation="1.5" result="blur" />
                     <feMerge>
-                      <feMergeNode in="blur"/>
-                      <feMergeNode in="SourceGraphic"/>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
                     </feMerge>
                   </filter>
                 </defs>
@@ -240,7 +216,13 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Card 2: BRAND EXPERIENCES */}
           <div className="rounded-[22px] border border-[#ff6b2c]/20 bg-white/[0.03] backdrop-blur-[30px] p-6 hover:border-[#ff6b2c]/50 hover:bg-white/[0.05] transition-all duration-300 group">
             <div className="w-12 h-12 flex items-center justify-start text-[#ff6b2c]">
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="44"
+                height="44"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M4.97883 6.31492C2.99294 7.10927 2 7.50645 2 8C2 8.49355 2.99294 8.89073 4.97883 9.68508L7.7873 10.8085C9.77318 11.6028 10.7661 12 12 12C13.2339 12 14.2268 11.6028 16.2127 10.8085L19.0212 9.68508C21.0071 8.89073 22 8.49355 22 8C22 7.50645 21.0071 7.10927 19.0212 6.31492L16.2127 5.19153C14.2268 4.39718 13.2339 4 12 4C11.0461 4 10.2361 4.2374 9 4.71221"
                   stroke="#FF6B2C"
@@ -271,12 +253,46 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Card 3: MOTION & STORYTELLING */}
           <div className="rounded-[22px] border border-[#ff6b2c]/20 bg-white/[0.03] backdrop-blur-[30px] p-6 hover:border-[#ff6b2c]/50 hover:bg-white/[0.05] transition-all duration-300 group">
             <div className="w-12 h-12 flex items-center justify-start text-[#ff6b2c]">
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="6" cy="18" r="2.5" stroke="#FF6B2C" strokeWidth="1.25" />
-                <circle cx="18" cy="6" r="2.5" stroke="#FF6B2C" strokeWidth="1.25" />
-                <circle cx="18" cy="18" r="2.5" stroke="#FF6B2C" strokeWidth="1.25" />
-                <path d="M8 16L16 8" stroke="#FF6B2C" strokeWidth="1.25" strokeLinecap="round" />
-                <path d="M8.5 18H15.5" stroke="#FF6B2C" strokeWidth="1.25" strokeLinecap="round" />
+              <svg
+                width="44"
+                height="44"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="6"
+                  cy="18"
+                  r="2.5"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                />
+                <circle
+                  cx="18"
+                  cy="6"
+                  r="2.5"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r="2.5"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                />
+                <path
+                  d="M8 16L16 8"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M8.5 18H15.5"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                />
               </svg>
             </div>
             <div className="text-xs font-bold text-white uppercase tracking-wider mt-4 font-display">
@@ -290,12 +306,44 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Card 4: AI-POWERED SOLUTIONS */}
           <div className="rounded-[22px] border border-[#ff6b2c]/20 bg-white/[0.03] backdrop-blur-[30px] p-6 hover:border-[#ff6b2c]/50 hover:bg-white/[0.05] transition-all duration-300 group">
             <div className="w-12 h-12 flex items-center justify-start text-[#ff6b2c]">
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 3V7" stroke="#FF6B2C" strokeWidth="1.25" strokeLinecap="round" />
-                <path d="M12 17V21" stroke="#FF6B2C" strokeWidth="1.25" strokeLinecap="round" />
-                <path d="M3 12H7" stroke="#FF6B2C" strokeWidth="1.25" strokeLinecap="round" />
-                <path d="M17 12H21" stroke="#FF6B2C" strokeWidth="1.25" strokeLinecap="round" />
-                <circle cx="12" cy="12" r="7" stroke="#FF6B2C" strokeWidth="1.25" />
+              <svg
+                width="44"
+                height="44"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 3V7"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M12 17V21"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M3 12H7"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M17 12H21"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="7"
+                  stroke="#FF6B2C"
+                  strokeWidth="1.25"
+                />
                 <circle cx="12" cy="12" r="1.5" fill="#FF6B2C" />
               </svg>
             </div>
@@ -306,9 +354,7 @@ export const Hero: React.FC<HeroProps> = ({
               Intelligent solutions for the future of brands.
             </p>
           </div>
-
         </div>
-
       </div>
     </section>
   );
