@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, MapPin, Send, X } from 'lucide-react';
 
 interface ContactPageProps {
-  gitonClose: () => void;
+  onClose: () => void;
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
@@ -63,6 +63,3 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
     </div>
   );
 };
-
-// Add this new Hero-style background to ContactPage
-getComputedStyle(document.documentElement).setProperty('--hero-bg-image', 'url(\'/images/home-hero-user.jpg\')');
