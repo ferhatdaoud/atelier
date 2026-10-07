@@ -1,15 +1,19 @@
-import React from 'react';
-import { TemplateItem } from '../types';
-import { TemplateShowcasePage } from './TemplateShowcasePage';
-import { ArrowUpRight } from 'lucide-react';
+import React from "react";
+import { TemplateItem } from "../types";
+import { TemplateShowcasePage } from "./TemplateShowcasePage";
+import { ArrowUpRight } from "lucide-react";
 
 interface FeaturedWorkProps {
   templates: TemplateItem[];
   onOrderTemplate: (template: TemplateItem) => void;
 }
 
-export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ templates, onOrderTemplate }) => {
-  const [selectedTemplate, setSelectedTemplate] = React.useState<TemplateItem | null>(null);
+export const FeaturedWork: React.FC<FeaturedWorkProps> = ({
+  templates,
+  onOrderTemplate,
+}) => {
+  const [selectedTemplate, setSelectedTemplate] =
+    React.useState<TemplateItem | null>(null);
 
   // 4 Featured Showcase projects with realistic mockup images from the local images folder
   const showcaseProjects = [
@@ -22,19 +26,19 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({ templates, onOrderTe
       templateMatch: templates[0] || null,
     },
     {
-      id: "lumen",
-      title: "LUMEN",
-      category: "Bespoke Website",
-      date: "June 6, 2026",
-      image: "/images/project-2-lumen.jpg",
+      id: "remote",
+      title: "REMOTE",
+      category: "Coaching App",
+      date: "April 6, 2026",
+      image: "/images/coaching-services.png",
       templateMatch: templates[1] || null,
     },
     {
-      id: "velora",
-      title: "AUREA",
+      id: "artisan",
+      title: "ARTISAN-APP",
       category: "Doctor & Clinic Cabinet",
       date: "June 6, 2026",
-      image: "/images/project-3-velora.jpg",
+      image: "/images/artisanecom.png",
       templateMatch: templates[2] || null,
     },
     {
