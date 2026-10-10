@@ -49,6 +49,14 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({
       image: "/images/project-4-resfel.jpg",
       templateMatch: templates[3] || null,
     },
+    {
+      id: "ecom",
+      title: "ECOM-SHOP",
+      category: "Ecomerce web app",
+      date: "June 6, 2026",
+      image: "/images/ecomshop.png",
+      templateMatch: templates[4] || null,
+    },
   ];
 
   const handleProjectClick = (template: TemplateItem) => {

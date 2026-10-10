@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TemplateItem, ClientOrder } from '../types';
-import { X, Check, ArrowRight, ShieldCheck, Clock, FileText, CheckCircle2 } from 'lucide-react';
+import { X, Check, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 interface OrderTemplateModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedTemplate: TemplateItem | null;
   initialPackage?: 'landing' | 'mvp' | 'full-app';
-  isCustomMvpMode?: boolean;
-  customScopeTotal?: number;
-  customScopeSummary?: string[];
   onOrderSubmitted: (order: ClientOrder) => void;
 }
 
@@ -18,14 +15,10 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
   onClose,
   selectedTemplate,
   initialPackage = 'mvp',
-  isCustomMvpMode = false,
-  customScopeTotal = 1850,
-  customScopeSummary = [],
   onOrderSubmitted
 }) => {
   const [step, setStep] = useState<'configure' | 'details' | 'success'>('configure');
   const [packageType, setPackageType] = useState<'landing' | 'mvp' | 'full-app'>('mvp');
-  const [selectedAddons, setSelectedAddons] = useState<string[]>(['brand-colors']);
   
   // Client details
   const [clientName, setClientName] = useState('');
@@ -42,7 +35,6 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
     if (isOpen) {
       setStep('configure');
       setPackageType(initialPackage);
-      setSelectedAddons(['brand-colors']);
       setSubmittedOrder(null);
       if (initialPackage === 'landing') {
         setTimeline('48–72 Hours');
@@ -52,7 +44,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
         setTimeline('3–4 Weeks');
       }
     }
-  }, [isOpen, selectedTemplate, isCustomMvpMode, initialPackage]);
+  }, [isOpen, selectedTemplate, initialPackage]);
 
   if (!isOpen) return null;
 
@@ -61,12 +53,10 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
   if (packageType === 'landing') {
     basePrice = 12000;
   } else if (packageType === 'mvp') {
-    basePrice = isCustomMvpMode ? customScopeTotal : 30000;
+    basePrice = 30000;
   } else if (packageType === 'full-app') {
     basePrice = 60000;
   }
-
-  const addonsTotal = 0; // No addons
 
   const totalPrice = basePrice;
 
@@ -92,7 +82,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
       industry: industry || (selectedTemplate?.categoryLabel || 'General Business'),
       hasBranding,
       timeline,
-      selectedAddons: [], // No addons
+      selectedAddons: [],
       totalPrice,
       notes,
       status: 'In Review',
@@ -198,7 +188,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                         <div className="text-[11px] text-zinc-400 mt-0.5">Rapid 3–7 day build for early validation & pitching</div>
                       </div>
                       <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">
-                        {isCustomMvpMode ? customScopeTotal : 30000} DA
+                        30000 DA
                       </span>
                     </div>
 <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
