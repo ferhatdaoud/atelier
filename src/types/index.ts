@@ -15,7 +15,6 @@ export interface TemplateItem {
   rawPrice: number;
   turnaroundTime: string;
   image: string;
-  tags: string[];
   features: string[];
   description: string;
   recommendedFor: string;

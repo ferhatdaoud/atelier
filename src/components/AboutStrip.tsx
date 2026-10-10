@@ -4,7 +4,7 @@ interface AboutStripProps {
   onLearnMore?: () => void;
 }
 
-export const AboutStrip: React.FC<AboutStripProps> = () => {
+export const AboutStrip: React.FC<AboutStripProps> = ({ onLearnMore }) => {
   return (
     <section id="about" className="py-24 sm:py-32 bg-[#000000] relative">
       <div className="mx-auto max-w-5xl px-6 text-center">

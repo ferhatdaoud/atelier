@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TemplateItem } from '../types';
-import { X, Monitor, Tablet, Smartphone, ExternalLink, Calendar, CheckCircle2, Star, ShieldCheck, HeartPulse, Clock, Sparkles } from 'lucide-react';
+import { X, Monitor, Tablet, Smartphone, Calendar, CheckCircle2, Star, ShieldCheck, HeartPulse, Sparkles } from 'lucide-react';
 
 interface LiveTemplateModalProps {
   template: TemplateItem | null;

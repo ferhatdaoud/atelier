@@ -12,13 +12,6 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 26000,
     turnaroundTime: "48 Hours",
     image: "/images/project-1-novus.jpg",
-    tags: [
-      "Next.js 15",
-      "Tailwind CSS",
-      "Chargili Subscriptions",
-      "Supabase Auth",
-      "AI Insights UI",
-    ],
     features: [
       "Interactive SaaS analytics dashboard mockup",
       "Dual pricing tier toggles (Monthly vs Annual)",
@@ -45,13 +38,6 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 23000,
     turnaroundTime: "2-3 Weeks",
     image: "/images/coaching-services.png",
-    tags: [
-      "Doctor Profile",
-      "Appointment Booking",
-      "HIPAA Ready UI",
-      "Treatment Menu",
-      "Google Reviews",
-    ],
     features: [
       "Step-by-step client appointment request scheduler",
       "Specialist coach credentials, degrees & bio card",
@@ -78,13 +64,6 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 29000,
     turnaroundTime: "2-3 Weeks",
     image: "/images/artisanecom.png",
-    tags: [
-      "API Docs",
-      "Syntax Highlighting",
-      "Self-Serve Auth",
-      "CLI Terminal Mockup",
-      "Changelog",
-    ],
     features: [
       "Interactive live API endpoint sandbox preview",
       "Interactive tabbed code snippet switcher (JS, Python, cURL)",
@@ -109,12 +88,6 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 25000,
     turnaroundTime: "48 Hours",
     image: "/images/template-doctor.jpg",
-    tags: [
-      "Aesthetics",
-      "Treatment Calculator",
-      "Doctor Credentials",
-      "Patient Stories",
-    ],
     features: [
       "Interactive treatment consultation guide",
       "Doctor board certifications and clinical gallery",
@@ -130,22 +103,16 @@ export const TEMPLATES: TemplateItem[] = [
     ordersCount: 31,
   },
   {
-    id: "sonder-luxury-dtc",
-    title: "Sonder Crafted Goods E-Commerce",
+    id: "Ecomerce Web Application",
+    title: "Crafted Goods E-Commerce",
     subtitle:
       "Minimalist editorial product storefront with slide-out cart & frictionless one-page checkout",
     category: "ecommerce",
     categoryLabel: "E-Commerce & Brands",
     turnkeyPrice: 125000,
     rawPrice: 33000,
-    turnaroundTime: "3-4 Days",
-    image: "/images/template-ecommerce.jpg",
-    tags: [
-      "Shopify Ready",
-      "Slide-out Cart",
-      "Editorial Lookbook",
-      "Product Storytelling",
-    ],
+    turnaroundTime: "7 Days",
+    image: "/images/ecomshop.png",
     features: [
       "Ultra-fast slideout cart drawer with free shipping bar",
       "Curated product lookbook with interactive hotspots",
@@ -171,12 +138,6 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 40000,
     turnaroundTime: "3-5 Days",
     image: "/images/template-architect.jpg",
-    tags: [
-      "Editorial Grid",
-      "Project Vault",
-      "Bespoke Inquiry Form",
-      "Fullscreen Gallery",
-    ],
     features: [
       "Interactive architectural project index with filtering by typology",
       "Full-bleed project storytelling with floor plans & specs",
@@ -190,84 +151,5 @@ export const TEMPLATES: TemplateItem[] = [
     demoType: "architect-bespoke",
     rating: 5.0,
     ordersCount: 19,
-  },
-];
-
-export const ORDER_ADDONS: OrderAddon[] = [
-  {
-    id: "brand-colors",
-    label: "Brand & Copy Adaptation",
-    description:
-      "We integrate your exact logo, brand palette, typography, and company copywriting into every section.",
-    price: 0, // Included free with Turnkey
-  },
-  {
-    id: "chargili-checkout",
-    label: "Chargili Payment / Booking Checkout",
-    description:
-      "Full integration with your Chargili account for subscription payments, one-time fees, or consultation deposits.",
-    price: 250,
-  },
-  {
-    id: "custom-domain",
-    label: "Custom Domain & DNS Setup",
-    description:
-      "We connect your domain (GoDaddy, Namecheap, Google Domains, Cloudflare) with automated SSL and CDN routing.",
-    price: 60,
-  },
-  {
-    id: "crm-intake",
-    label: "CRM & Lead Automation",
-    description:
-      "Sends all patient or lead submissions directly to your email, WhatsApp, or CRM (HubSpot, Notion, Airtable).",
-    price: 150,
-  },
-  {
-    id: "extra-pages",
-    label: "2 Additional Custom Subpages",
-    description:
-      "Need specific case studies, team sub-pages, or specialized clinic treatment dossiers? We craft them to match.",
-    price: 280,
-  },
-];
-
-export const INITIAL_TEST_ORDERS: ClientOrder[] = [
-  {
-    id: "VK-4192",
-    orderType: "template",
-    templateId: "pulse-saas-mvp",
-    templateTitle: "Pulse Analytics & AI MVP",
-    tier: "turnkey",
-    clientName: "Julian Croft",
-    clientEmail: "julian@orbitpulse.io",
-    companyName: "OrbitPulse Technologies",
-    industry: "FinTech Analytics",
-    hasBranding: "ready",
-    timeline: "Within 48 hours",
-    selectedAddons: ["brand-colors", "chargili-checkout"],
-    totalPrice: 1040,
-    notes:
-      "We have our Figma logo and API docs ready. Need the pricing page hooked to our Chargili test keys.",
-    status: "In Development",
-    createdAt: "2026-09-28",
-  },
-  {
-    id: "VK-3801",
-    orderType: "template",
-    templateId: "coaching-remote",
-    templateTitle: "Sanora Medical & Dental Cabinet",
-    tier: "turnkey",
-    clientName: "Dr. Elena Rostova",
-    clientEmail: "dr.rostova@rostovaclinic.com",
-    companyName: "Rostova Dental & Aesthetics",
-    industry: "Dental & Maxillofacial Practice",
-    hasBranding: "need-logo",
-    timeline: "3-4 Days",
-    selectedAddons: ["brand-colors", "crm-intake", "custom-domain"],
-    totalPrice: 860,
-    notes:
-      "Please add our 3 dentists to the staff section with their specialty qualifications and link booking to our reception desk email.",
-    status: "Ready to Launch",
-    createdAt: "2026-09-26",
   },
 ];
