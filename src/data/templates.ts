@@ -12,6 +12,7 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 26000,
     turnaroundTime: "48 Hours",
     image: "/images/project-1-novus.jpg",
+    siteLink: "https://novus-analytics.com",
     features: [
       "Interactive SaaS analytics dashboard mockup",
       "Dual pricing tier toggles (Monthly vs Annual)",
@@ -37,6 +38,7 @@ export const TEMPLATES: TemplateItem[] = [
     turnkeyPrice: 85000,
     rawPrice: 23000,
     turnaroundTime: "2-3 Weeks",
+    siteLink: "https://medieteticienne.vercel.app/",
     image: "/images/coaching-services.png",
     features: [
       "Step-by-step client appointment request scheduler",
@@ -64,6 +66,7 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 29000,
     turnaroundTime: "2-3 Weeks",
     image: "/images/artisanecom.png",
+    siteLink: "https://merchant-ecom.vercel.app/",
     features: [
       "Interactive live API endpoint sandbox preview",
       "Interactive tabbed code snippet switcher (JS, Python, cURL)",
@@ -88,6 +91,7 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 25000,
     turnaroundTime: "48 Hours",
     image: "/images/template-doctor.jpg",
+    siteLink: "https://cura-dermal.com",
     features: [
       "Interactive treatment consultation guide",
       "Doctor board certifications and clinical gallery",
@@ -113,6 +117,7 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 33000,
     turnaroundTime: "7 Days",
     image: "/images/ecomshop.png",
+    siteLink: "https://ecom-app-services.vercel.app/",
     features: [
       "Ultra-fast slideout cart drawer with free shipping bar",
       "Curated product lookbook with interactive hotspots",
@@ -138,6 +143,7 @@ export const TEMPLATES: TemplateItem[] = [
     rawPrice: 40000,
     turnaroundTime: "3-5 Days",
     image: "/images/template-architect.jpg",
+    siteLink: "",
     features: [
       "Interactive architectural project index with filtering by typology",
       "Full-bleed project storytelling with floor plans & specs",
