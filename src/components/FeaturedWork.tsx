@@ -36,7 +36,7 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({
     {
       id: "artisan",
       title: "ARTISAN-APP",
-      category: "Doctor & Clinic Cabinet",
+      category: "Artisan application",
       date: "June 6, 2026",
       image: "/images/artisanecom.png",
       templateMatch: templates[2] || null,
@@ -103,6 +103,19 @@ export const FeaturedWork: React.FC<FeaturedWorkProps> = ({
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
+                {project.templateMatch?.siteLink && (
+                  <a
+                    className="visual-link"
+                    href={project.templateMatch.siteLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open the live ${project.title} site in a new tab`}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    See website
+                    <ArrowUpRight size={14} />
+                  </a>
+                )}
               </div>
 
               {/* Card Footer matching screenshot */}
