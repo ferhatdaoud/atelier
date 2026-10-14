@@ -1,4 +1,4 @@
-import { TemplateItem, OrderAddon, ClientOrder } from "../types";
+import { TemplateItem } from "../types";
 
 export const TEMPLATES: TemplateItem[] = [
   {
@@ -9,7 +9,6 @@ export const TEMPLATES: TemplateItem[] = [
     category: "startup-mvp",
     categoryLabel: "Startup MVP",
     turnkeyPrice: 100000,
-    rawPrice: 26000,
     turnaroundTime: "48 Hours",
     image: "/images/project-1-novus.jpg",
     siteLink: "https://novus-analytics.com",
@@ -24,9 +23,6 @@ export const TEMPLATES: TemplateItem[] = [
       "Designed specifically for tech founders launching a software MVP. Eliminates months of front-end work with pre-built user workflows, pricing grids, and high-impact hero typography.",
     recommendedFor:
       "B2B SaaS, Micro-SaaS tools, AI wrappers, and tech startups seeking validation.",
-    demoType: "saas-mvp",
-    rating: 4.9,
-    ordersCount: 38,
   },
   {
     id: "coaching-remote",
@@ -36,7 +32,6 @@ export const TEMPLATES: TemplateItem[] = [
     category: "medical-clinic",
     categoryLabel: "Doctors & Clinics",
     turnkeyPrice: 85000,
-    rawPrice: 23000,
     turnaroundTime: "2-3 Weeks",
     siteLink: "https://medieteticienne.vercel.app/",
     image: "/images/coaching-services.png",
@@ -51,9 +46,6 @@ export const TEMPLATES: TemplateItem[] = [
       "Built specifically for coaching, dentists, therapists, and doctors. Projects immediate clinical trust and guides patients seamlessly from symptom awareness to confirmed bookings.",
     recommendedFor:
       "Private coaching, doctors, physiotherapists, dermatology cabinets, and wellness centers.",
-    demoType: "doctor-clinic",
-    rating: 5.0,
-    ordersCount: 44,
   },
   {
     id: "relay-saas-quicklaunch",
@@ -63,7 +55,6 @@ export const TEMPLATES: TemplateItem[] = [
     category: "startup-mvp",
     categoryLabel: "Startup MVP",
     turnkeyPrice: 110000,
-    rawPrice: 29000,
     turnaroundTime: "2-3 Weeks",
     image: "/images/artisanecom.png",
     siteLink: "https://merchant-ecom.vercel.app/",
@@ -76,9 +67,6 @@ export const TEMPLATES: TemplateItem[] = [
     description:
       "Engineered for developer-first products and technical founders. Establishes immediate technical credibility with fast load times and clean code blocks.",
     recommendedFor: "Admin, Merchant, Artisans, and Seller markup.",
-    demoType: "saas-mvp",
-    rating: 4.8,
-    ordersCount: 22,
   },
   {
     id: "cura-dermal-cabinet",
@@ -88,7 +76,6 @@ export const TEMPLATES: TemplateItem[] = [
     category: "medical-clinic",
     categoryLabel: "Doctors & Clinics",
     turnkeyPrice: 90000,
-    rawPrice: 25000,
     turnaroundTime: "48 Hours",
     image: "/images/template-doctor.jpg",
     siteLink: "https://cura-dermal.com",
@@ -102,9 +89,6 @@ export const TEMPLATES: TemplateItem[] = [
       "Crafted for modern dermatologists, aesthetic practitioners, and private plastic surgery clinics seeking a clean, high-end editorial presence.",
     recommendedFor:
       "Aesthetic clinics, cosmetic dentists, luxury wellness spas, and dermatologists.",
-    demoType: "doctor-clinic",
-    rating: 4.9,
-    ordersCount: 31,
   },
   {
     id: "Ecomerce Web Application",
@@ -114,7 +98,6 @@ export const TEMPLATES: TemplateItem[] = [
     category: "ecommerce",
     categoryLabel: "E-Commerce & Brands",
     turnkeyPrice: 125000,
-    rawPrice: 33000,
     turnaroundTime: "7 Days",
     image: "/images/ecomshop.png",
     siteLink: "https://ecom-app-services.vercel.app/",
@@ -128,34 +111,5 @@ export const TEMPLATES: TemplateItem[] = [
       "A boutique digital storefront engineered to convert premium buyers without visual clutter. Prioritizes product photography and typography.",
     recommendedFor:
       "Direct-to-consumer brands, artisan makers, luxury apparel, and bespoke physical products.",
-    demoType: "ecommerce-luxury",
-    rating: 4.9,
-    ordersCount: 27,
-  },
-  {
-    id: "monolith-architects",
-    title: "Monolith Architectural & Design Studio",
-    subtitle:
-      "Monochromatic architectural firm portfolio with project vault, blueprints & client briefing engine",
-    category: "custom-bespoke",
-    categoryLabel: "Custom Bespoke",
-    turnkeyPrice: 150000,
-    rawPrice: 40000,
-    turnaroundTime: "3-5 Days",
-    image: "/images/template-architect.jpg",
-    siteLink: "",
-    features: [
-      "Interactive architectural project index with filtering by typology",
-      "Full-bleed project storytelling with floor plans & specs",
-      "In-depth client project briefing questionnaire",
-      "Subtle page transitions and responsive masonry grid",
-    ],
-    description:
-      "Designed for architecture offices, interior design practices, and bespoke high-end agencies that need an unmistakably authoritative online presence.",
-    recommendedFor:
-      "Architects, interior design studios, creative directors, and custom consultancies.",
-    demoType: "architect-bespoke",
-    rating: 5.0,
-    ordersCount: 19,
   },
 ];

@@ -1,13 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { TemplateItem, ClientOrder } from '../types';
-import { X, Check, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { PackageType, TemplateItem } from '../types';
+import { X, ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
+import { api, errorMessage } from '../lib/api';
+import { formatPrice } from '../lib/format';
+
+const TIMELINES = [
+  'Within 48–72 hours (Rush)',
+  'Within 3–7 days',
+  'Within 1–2 weeks',
+  'Within 3–4 weeks',
+  'Flexible / Exploring options',
+];
+
+// Prices must match backend/src/lib/catalog.ts, which decides the price actually stored.
+const PACKAGES: Record<PackageType, { name: string; shortName: string; price: number; timeline: string }> = {
+  landing: { name: 'High-Converting Landing Page', shortName: 'Landing Page', price: 12000, timeline: 'Within 48–72 hours (Rush)' },
+  mvp: { name: 'Startup MVP Sprint', shortName: 'Startup MVP', price: 30000, timeline: 'Within 3–7 days' },
+  'full-app': { name: 'Full Scalable Web Application', shortName: 'Full Scalable App', price: 60000, timeline: 'Within 3–4 weeks' },
+};
+
+interface SubmittedOrder {
+  reference: string;
+  clientName: string;
+  companyName: string;
+  project: string;
+  timeline: string;
+  estimatedPrice: number;
+}
 
 interface OrderTemplateModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedTemplate: TemplateItem | null;
-  initialPackage?: 'landing' | 'mvp' | 'full-app';
-  onOrderSubmitted: (order: ClientOrder) => void;
+  initialPackage?: PackageType;
 }
 
 export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
@@ -15,83 +40,81 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
   onClose,
   selectedTemplate,
   initialPackage = 'mvp',
-  onOrderSubmitted
 }) => {
   const [step, setStep] = useState<'configure' | 'details' | 'success'>('configure');
-  const [packageType, setPackageType] = useState<'landing' | 'mvp' | 'full-app'>('mvp');
-  
+  const [packageType, setPackageType] = useState<PackageType>('mvp');
+
   // Client details
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [industry, setIndustry] = useState('');
   const [hasBranding, setHasBranding] = useState<'ready' | 'need-logo' | 'complete-rebrand'>('ready');
-  const [timeline, setTimeline] = useState('Within 3–7 days');
+  const [timeline, setTimeline] = useState(PACKAGES.mvp.timeline);
   const [notes, setNotes] = useState('');
-  const [submittedOrder, setSubmittedOrder] = useState<ClientOrder | null>(null);
+  const [honeypot, setHoneypot] = useState('');
+  const [submittedOrder, setSubmittedOrder] = useState<SubmittedOrder | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const selectPackage = (next: PackageType) => {
+    setPackageType(next);
+    setTimeline(PACKAGES[next].timeline);
+  };
 
   // Reset or configure when opened
   useEffect(() => {
     if (isOpen) {
       setStep('configure');
       setPackageType(initialPackage);
+      setTimeline(PACKAGES[initialPackage].timeline);
       setSubmittedOrder(null);
-      if (initialPackage === 'landing') {
-        setTimeline('48–72 Hours');
-      } else if (initialPackage === 'mvp') {
-        setTimeline('3–7 Days');
-      } else {
-        setTimeline('3–4 Weeks');
-      }
+      setSubmitError(null);
     }
   }, [isOpen, selectedTemplate, initialPackage]);
 
   if (!isOpen) return null;
 
-  // Calculate pricing based on package
-  let basePrice = 30000;
-  if (packageType === 'landing') {
-    basePrice = 12000;
-  } else if (packageType === 'mvp') {
-    basePrice = 30000;
-  } else if (packageType === 'full-app') {
-    basePrice = 60000;
-  }
+  const pkg = PACKAGES[packageType];
 
-  const totalPrice = basePrice;
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!clientName || !clientEmail || !companyName) return;
+    if (!clientName || !clientEmail || !companyName || isSubmitting) return;
 
-    const packageNames = {
-      landing: 'High-Converting Landing Page',
-      mvp: 'Startup MVP Sprint',
-      'full-app': 'Full Scalable Web Application (Auth, DB, Cloud Hosting, Domain)'
-    };
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const created = await api<{ reference: string; estimatedPrice: number }>('/orders', {
+        method: 'POST',
+        body: {
+          packageType,
+          templateId: selectedTemplate?.id,
+          templateTitle: selectedTemplate?.title,
+          clientName,
+          clientEmail,
+          companyName,
+          industry: industry || selectedTemplate?.categoryLabel || 'General Business',
+          hasBranding,
+          timeline,
+          notes,
+          website: honeypot,
+        },
+      });
 
-    const newOrder: ClientOrder = {
-      id: `VK-${Math.floor(1000 + Math.random() * 9000)}`,
-      orderType: 'package',
-      templateId: selectedTemplate?.id,
-      templateTitle: selectedTemplate ? `${packageNames[packageType]} (${selectedTemplate.title})` : packageNames[packageType],
-      tier: packageType,
-      clientName,
-      clientEmail,
-      companyName,
-      industry: industry || (selectedTemplate?.categoryLabel || 'General Business'),
-      hasBranding,
-      timeline,
-      selectedAddons: [],
-      totalPrice,
-      notes,
-      status: 'In Review',
-      createdAt: new Date().toISOString().split('T')[0]
-    };
-
-    setSubmittedOrder(newOrder);
-    onOrderSubmitted(newOrder);
-    setStep('success');
+      setSubmittedOrder({
+        reference: created.reference,
+        clientName,
+        companyName,
+        project: selectedTemplate ? `${pkg.name} (${selectedTemplate.title})` : pkg.name,
+        timeline,
+        estimatedPrice: created.estimatedPrice,
+      });
+      setStep('success');
+    } catch (err) {
+      setSubmitError(errorMessage(err));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -105,9 +128,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
               Project Onboarding & Scope
             </div>
             <h2 className="text-base font-bold text-neutral-100 font-display">
-              {packageType === 'landing' ? 'High-Converting Landing Page' :
-               packageType === 'mvp' ? 'Startup MVP Sprint' : 
-               'Full Scalable Web Application'}
+              {pkg.name}
             </h2>
           </div>
           <button
@@ -151,7 +172,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                   
                   {/* Package 1: Landing Page */}
                   <div
-                    onClick={() => { setPackageType('landing'); setTimeline('48–72 Hours'); }}
+                    onClick={() => selectPackage('landing')}
                     className={`cursor-pointer rounded-2xl border p-4 transition-all ${
                       packageType === 'landing'
                         ? 'border-[#ff6b2c] bg-[#ff6b2c]/10 ring-1 ring-[#ff6b2c]'
@@ -163,7 +184,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                          <span className="text-xs font-bold text-white">01. High-Converting Landing Page</span>
                          <div className="text-[11px] text-zinc-400 mt-0.5">Clinics, Cabinets, Waitlists, & Portfolios</div>
                        </div>
-                       <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">12,000 DA</span>
+                       <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">{formatPrice(PACKAGES.landing.price)}</span>
                      </div>
                      <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
                        Custom tailored responsive design, lead form, and local SEO setup in 48–72h.
@@ -172,7 +193,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
 
                   {/* Package 2: Startup MVP Sprint */}
                   <div
-                    onClick={() => { setPackageType('mvp'); setTimeline('3–7 Days'); }}
+                    onClick={() => selectPackage('mvp')}
                     className={`cursor-pointer rounded-2xl border p-4 transition-all ${
                       packageType === 'mvp'
                         ? 'border-[#ff6b2c] bg-[#ff6b2c]/10 ring-1 ring-[#ff6b2c]'
@@ -188,7 +209,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                         <div className="text-[11px] text-zinc-400 mt-0.5">Rapid 3–7 day build for early validation & pitching</div>
                       </div>
                       <span className="text-sm font-bold text-[#ff6b2c] tabular-nums">
-                        30000 DA
+                        {formatPrice(PACKAGES.mvp.price)}
                       </span>
                     </div>
 <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
@@ -198,7 +219,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
 
                   {/* Package 3: Full Scalable Web Application */}
                   <div
-                    onClick={() => { setPackageType('full-app'); setTimeline('3–4 Weeks'); }}
+                    onClick={() => selectPackage('full-app')}
                     className={`cursor-pointer rounded-2xl border p-4 transition-all ${
                       packageType === 'full-app'
                         ? 'border-[#ff6b2c] bg-[#ff6b2c]/10 ring-1 ring-[#ff6b2c]'
@@ -225,7 +246,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                 <div>
                   <div className="text-xs text-zinc-400">Total Project Estimate</div>
                   <div className="text-2xl font-bold text-white font-display tabular-nums">
-                    {totalPrice.toLocaleString()} DA
+                    {formatPrice(pkg.price)}
                   </div>
                 </div>
 
@@ -317,10 +338,9 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                     onChange={(e) => setTimeline(e.target.value)}
                     className="w-full rounded-xl border border-white/15 bg-black px-3.5 py-2.5 text-xs text-white focus:border-[#ff6b2c] focus:outline-none"
                   >
-                    <option>Within 48-72 hours (Rush)</option>
-                    <option>Within 1-2 weeks</option>
-                    <option>Within 1 month</option>
-                    <option>Flexible / Exploring options</option>
+                    {TIMELINES.map((option) => (
+                      <option key={option}>{option}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -339,14 +359,28 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
               {/* Order total confirmation */}
               <div className="rounded-xl bg-black border border-white/15 p-4 flex items-center justify-between text-xs text-zinc-300">
                 <span>
-                  Summary: {selectedTemplate?.title || 'Custom Scope'} · {
-                    packageType === 'landing' ? 'Landing Page' : 
-                    packageType === 'mvp' ? 'Startup MVP' : 
-                    'Full Scalable App'
-                  }
+                  Summary: {selectedTemplate?.title || 'Custom Scope'} · {pkg.shortName}
                 </span>
-                <span className="font-bold text-[#ff6b2c] text-sm tabular-nums">${totalPrice}</span>
+                <span className="font-bold text-[#ff6b2c] text-sm tabular-nums">{formatPrice(pkg.price)}</span>
               </div>
+
+              {/* Honeypot: invisible to people, tempting to bots. */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+
+              {submitError && (
+                <p role="alert" className="rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-3 text-xs text-red-300">
+                  {submitError}
+                </p>
+              )}
 
               <div className="pt-2 flex items-center justify-between">
                 <button
@@ -359,9 +393,11 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
 
                 <button
                   type="submit"
-                  className="rounded-full bg-[#ff6b2c] px-7 py-3 text-xs font-bold text-white hover:bg-[#ff824d] hover:shadow-[0_0_25px_rgba(255,107,44,0.4)] transition-all"
+                  disabled={isSubmitting}
+                  className="flex items-center gap-2 rounded-full bg-[#ff6b2c] px-7 py-3 text-xs font-bold text-white hover:bg-[#ff824d] hover:shadow-[0_0_25px_rgba(255,107,44,0.4)] transition-all disabled:opacity-60 disabled:cursor-wait"
                 >
-                  Submit Order & Receive Kickoff
+                  {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {isSubmitting ? 'Submitting…' : 'Submit Order & Receive Kickoff'}
                 </button>
               </div>
 
@@ -376,7 +412,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
               </div>
 
               <h3 className="text-xl font-bold text-white font-display">
-                Order Ticket #{submittedOrder.id} Received!
+                Order Ticket #{submittedOrder.reference} Received!
               </h3>
               <p className="mt-2 text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">
                 Thank you, <strong>{submittedOrder.clientName}</strong>. We have logged your request for <strong>{submittedOrder.companyName}</strong>. 
@@ -387,7 +423,7 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
               <div className="mt-6 rounded-2xl border border-white/10 bg-black/90 p-5 max-w-md mx-auto text-left text-xs space-y-2.5 font-mono">
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span className="text-zinc-500">Project:</span>
-                  <span className="font-semibold text-white">{submittedOrder.templateTitle}</span>
+                  <span className="font-semibold text-white">{submittedOrder.project}</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span className="text-zinc-500">Target Delivery:</span>
@@ -395,11 +431,11 @@ export const OrderTemplateModal: React.FC<OrderTemplateModalProps> = ({
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span className="text-zinc-500">Fixed Budget:</span>
-                  <span className="font-bold text-[#ff6b2c] tabular-nums">${submittedOrder.totalPrice}</span>
+                  <span className="font-bold text-[#ff6b2c] tabular-nums">{formatPrice(submittedOrder.estimatedPrice)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-zinc-500">Status:</span>
-                  <span className="text-[#ff6b2c] font-medium">{submittedOrder.status}</span>
+                  <span className="text-[#ff6b2c] font-medium">In Review</span>
                 </div>
               </div>
 

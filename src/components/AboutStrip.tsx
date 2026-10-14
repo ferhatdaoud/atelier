@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface AboutStripProps {
-  onLearnMore?: () => void;
-}
-
-export const AboutStrip: React.FC<AboutStripProps> = ({ onLearnMore }) => {
+export const AboutStrip: React.FC = () => {
   return (
     <section id="about" className="py-24 sm:py-32 bg-[#000000] relative">
       <div className="mx-auto max-w-5xl px-6 text-center">

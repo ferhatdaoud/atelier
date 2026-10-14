@@ -1,11 +1,10 @@
 import React from "react";
 
 interface HeroProps {
-  onExploreWork: () => void;
   onBookCall: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onExploreWork, onBookCall }) => {
+export const Hero: React.FC<HeroProps> = ({ onBookCall }) => {
   return (
     <section
       id="home"

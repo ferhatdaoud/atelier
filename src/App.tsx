@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { AboutStrip } from './components/AboutStrip';
@@ -9,56 +9,35 @@ import { ProcessTimeline } from './components/ProcessTimeline';
 import { FaqSection } from './components/FaqSection';
 import { CtaBanner } from './components/CtaBanner';
 import { Footer } from './components/Footer';
-import { LiveTemplateModal } from './components/LiveTemplateModal';
 import { OrderTemplateModal } from './components/OrderTemplateModal';
 import { ContactPage } from './components/ContactPage';
 import { TEMPLATES } from './data/templates';
-import { TemplateItem, ClientOrder } from './types';
+import { PackageType, TemplateItem } from './types';
 
 export default function App() {
-  const [activeDemoTemplate, setActiveDemoTemplate] = useState<TemplateItem | null>(null);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [selectedOrderTemplate, setSelectedOrderTemplate] = useState<TemplateItem | null>(null);
-  const [selectedPackage, setSelectedPackage] = useState<'landing' | 'mvp' | 'full-app'>('mvp');
+  const [selectedPackage, setSelectedPackage] = useState<PackageType>('mvp');
 
   const handleOrderTemplate = (template: TemplateItem) => {
     setSelectedOrderTemplate(template);
-    if (template.category === 'medical-clinic') {
-      setSelectedPackage('landing');
-    } else {
-      setSelectedPackage('mvp');
-    }
+    setSelectedPackage(template.category === 'medical-clinic' ? 'landing' : 'mvp');
     setIsOrderModalOpen(true);
   };
 
-  const handleStartPackageProject = (packageType: 'landing' | 'mvp' | 'full-app' = 'mvp') => {
+  const handleStartPackageProject = (packageType: PackageType = 'mvp') => {
     setSelectedOrderTemplate(null);
     setSelectedPackage(packageType);
     setIsOrderModalOpen(true);
   };
 
-  const handleOrderSubmitted = (newOrder: ClientOrder) => {
-    console.log('KZFR studio received project brief:', newOrder);
-  };
-
   return (
     <div className="min-h-screen bg-[#080808] text-[#f4f4f5] flex flex-col font-sans selection:bg-[#ff6b2c] selection:text-white">
-      <Navbar onOpenOrderModal={() => handleStartPackageProject('mvp')} onOpenContact={() => setIsContactModalOpen(true)} />
+      <Navbar onOpenContact={() => setIsContactModalOpen(true)} />
       <main className="flex-1">
-        <Hero
-          onExploreWork={() => {
-            const el = document.getElementById('work');
-            el?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          onBookCall={() => handleStartPackageProject('mvp')}
-        />
-        <AboutStrip
-          onLearnMore={() => {
-            const el = document.getElementById('services');
-            el?.scrollIntoView({ behavior: 'smooth' });
-          }}
-        />
+        <Hero onBookCall={() => handleStartPackageProject('mvp')} />
+        <AboutStrip />
         <FeaturedWork
           templates={TEMPLATES}
           onOrderTemplate={handleOrderTemplate}
@@ -70,20 +49,11 @@ export default function App() {
         <CtaBanner onStartProject={() => handleStartPackageProject('mvp')} />
       </main>
       <Footer onStartProject={() => handleStartPackageProject('mvp')} />
-      <LiveTemplateModal
-        template={activeDemoTemplate}
-        onClose={() => setActiveDemoTemplate(null)}
-        onOrder={(template) => {
-          setActiveDemoTemplate(null);
-          handleOrderTemplate(template);
-        }}
-      />
       <OrderTemplateModal
         isOpen={isOrderModalOpen}
         onClose={() => setIsOrderModalOpen(false)}
         selectedTemplate={selectedOrderTemplate}
         initialPackage={selectedPackage}
-        onOrderSubmitted={handleOrderSubmitted}
       />
       {isContactModalOpen && (
         <ContactPage onClose={() => setIsContactModalOpen(false)} />

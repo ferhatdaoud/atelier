@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Mail, MapPin, Send, X } from "lucide-react";
+import { CheckCircle2, Loader2, Mail, MapPin, Send, X } from "lucide-react";
+import { api, errorMessage } from "../lib/api";
 
 interface ContactPageProps {
   onClose: () => void;
@@ -10,13 +11,22 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
     name: "",
     email: "",
     message: "",
+    website: "", // honeypot — hidden from humans
   });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Contact form submitted:", formData);
-    alert("Thank you! Your message has been sent.");
-    onClose();
+    setStatus("sending");
+    setError(null);
+    try {
+      await api("/contact", { method: "POST", body: formData });
+      setStatus("sent");
+    } catch (err) {
+      setError(errorMessage(err));
+      setStatus("idle");
+    }
   };
 
   return (
@@ -66,41 +76,93 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <input
-              type="text"
-              placeholder="Your Name"
-              required
-              className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl p-4 text-sm focus:border-[#ff6b2c] outline-none"
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              required
-              className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl p-4 text-sm focus:border-[#ff6b2c] outline-none"
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
-            <textarea
-              placeholder="Your Message"
-              required
-              rows={4}
-              className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl p-4 text-sm focus:border-[#ff6b2c] outline-none"
-              onChange={(e) =>
-                setFormData({ ...formData, message: e.target.value })
-              }
-            />
-            <button
-              type="submit"
-              className="w-full bg-[#ff6b2c] py-4 rounded-xl font-bold text-sm hover:bg-[#ff824d] transition-all flex items-center justify-center gap-2"
-            >
-              Send Message <Send className="w-4 h-4" />
-            </button>
-          </form>
+          {status === "sent" ? (
+            <div className="flex flex-col items-center justify-center text-center rounded-2xl border border-white/10 bg-[#0d0d0d] p-8">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#ff6b2c]/10 border border-[#ff6b2c]/30 text-[#ff6b2c] mb-4">
+                <CheckCircle2 className="w-7 h-7" />
+              </div>
+              <h3 className="text-xl font-bold font-display">Message sent!</h3>
+              <p className="mt-2 text-sm text-zinc-400 leading-relaxed">
+                Thanks {formData.name.split(" ")[0]}, we'll get back to you at{" "}
+                <span className="text-zinc-200">{formData.email}</span> within one business day.
+              </p>
+              <button
+                onClick={onClose}
+                className="mt-6 rounded-full bg-white/10 border border-white/15 px-6 py-2.5 text-xs font-semibold hover:bg-white/20 transition-colors"
+              >
+                Done
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                placeholder="Your Name"
+                required
+                maxLength={100}
+                value={formData.name}
+                className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl p-4 text-sm focus:border-[#ff6b2c] outline-none"
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                required
+                maxLength={254}
+                value={formData.email}
+                className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl p-4 text-sm focus:border-[#ff6b2c] outline-none"
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+              <textarea
+                placeholder="Your Message"
+                required
+                rows={4}
+                maxLength={5000}
+                value={formData.message}
+                className="w-full bg-[#0d0d0d] border border-white/10 rounded-xl p-4 text-sm focus:border-[#ff6b2c] outline-none"
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
+              />
+              {/* Honeypot: invisible to people, tempting to bots. */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="hidden"
+                value={formData.website}
+                onChange={(e) =>
+                  setFormData({ ...formData, website: e.target.value })
+                }
+              />
+              {error && (
+                <p role="alert" className="rounded-xl border border-red-500/30 bg-red-950/30 px-4 py-3 text-sm text-red-300">
+                  {error}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full bg-[#ff6b2c] py-4 rounded-xl font-bold text-sm hover:bg-[#ff824d] transition-all flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-wait"
+              >
+                {status === "sending" ? (
+                  <>
+                    Sending… <Loader2 className="w-4 h-4 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Send Message <Send className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </form>
+          )}
         </main>
       </div>
     </div>
