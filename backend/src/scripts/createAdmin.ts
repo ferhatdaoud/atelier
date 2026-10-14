@@ -15,7 +15,8 @@ import { hashPassword } from '../lib/password.js';
 
 const MIN_PASSWORD_LENGTH = 10;
 
-function askHidden(prompt: string): Promise<string> {
+/** Asks for the password twice without echoing it. Also works with piped input. */
+async function askPasswordTwice(email: string): Promise<[string, string]> {
   let muted = false;
   const output = new Writable({
     write(chunk, encoding, callback) {
@@ -23,17 +24,23 @@ function askHidden(prompt: string): Promise<string> {
       callback();
     },
   });
-  const rl = readline.createInterface({ input: process.stdin, output, terminal: true });
+  const rl = readline.createInterface({ input: process.stdin, output, terminal: Boolean(process.stdin.isTTY) });
+  const lines = rl[Symbol.asyncIterator]();
 
-  return new Promise((resolve) => {
+  const ask = async (prompt: string) => {
     process.stdout.write(prompt);
     muted = true;
-    rl.question('', (answer) => {
-      rl.close();
-      process.stdout.write('\n');
-      resolve(answer);
-    });
-  });
+    const { value } = await lines.next();
+    muted = false;
+    process.stdout.write('\n');
+    return typeof value === 'string' ? value : '';
+  };
+
+  try {
+    return [await ask(`Password for ${email}: `), await ask('Confirm password: ')];
+  } finally {
+    rl.close();
+  }
 }
 
 async function main() {
@@ -52,8 +59,8 @@ async function main() {
 
   let password = process.env.ADMIN_PASSWORD;
   if (!password) {
-    password = await askHidden(`Password for ${email.data}: `);
-    const confirm = await askHidden('Confirm password: ');
+    const [first, confirm] = await askPasswordTwice(email.data);
+    password = first;
     if (password !== confirm) {
       console.error('Passwords do not match.');
       process.exit(1);

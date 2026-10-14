@@ -1,4 +1,5 @@
 import { rateLimit } from 'express-rate-limit';
+import { PostgresStore } from '../lib/rateLimitStore.js';
 
 const common = {
   standardHeaders: 'draft-8' as const,
@@ -11,6 +12,7 @@ export const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   limit: 10,
   skipSuccessfulRequests: true,
+  store: new PostgresStore('login'),
   message: { error: 'Too many login attempts. Please try again in 15 minutes.' },
 });
 
@@ -19,5 +21,6 @@ export const publicFormLimiter = rateLimit({
   ...common,
   windowMs: 60 * 60 * 1000,
   limit: 10,
+  store: new PostgresStore('form'),
   message: { error: 'Too many submissions. Please try again later.' },
 });

@@ -1,0 +1,15 @@
+{
+  // Used by Vercel when compiling the serverless function (and by `npx tsc -p api`).
+  // Node settings, unlike the browser-oriented tsconfig at the repo root.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["."]
+}

@@ -19,11 +19,11 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required (e.g. postgres://user:pass@localhost:5432/kzfr)'),
 
   // Comma-separated list of allowed browser origins. Leave empty when the API is
-  // served from the same origin as the frontend (Vite proxy in dev, or Express in prod).
+  // served from the same origin as the frontend (Vite proxy in dev, Vercel or Express in prod).
   CORS_ORIGIN: optionalString,
-  // Set to the number of reverse proxies in front of the app (e.g. 1 behind Nginx/Render)
-  // so rate limiting sees the real client IP.
-  TRUST_PROXY: z.coerce.number().int().min(0).default(0),
+  // Number of reverse proxies in front of the app, so rate limiting sees the real
+  // client IP. Vercel's edge network is one proxy, so it defaults to 1 there.
+  TRUST_PROXY: z.coerce.number().int().min(0).default(process.env.VERCEL ? 1 : 0),
 
   SESSION_TTL_HOURS: z.coerce.number().positive().default(24 * 7),
 
@@ -40,12 +40,12 @@ const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  console.error('Invalid environment configuration:');
-  for (const issue of parsed.error.issues) {
-    console.error(`  - ${issue.path.join('.')}: ${issue.message}`);
-  }
-  console.error('Copy backend/.env.example to backend/.env and fill in the values.');
-  process.exit(1);
+  // Thrown rather than process.exit() so the reason shows up in serverless logs too.
+  const details = parsed.error.issues.map((issue) => `  - ${issue.path.join('.')}: ${issue.message}`).join('\n');
+  throw new Error(
+    `Invalid environment configuration:\n${details}\n` +
+      'Locally: copy backend/.env.example to backend/.env. On Vercel: set them in Project Settings → Environment Variables.',
+  );
 }
 
 export const config = {

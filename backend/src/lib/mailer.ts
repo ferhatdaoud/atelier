@@ -1,3 +1,4 @@
+import { waitUntil } from '@vercel/functions';
 import nodemailer from 'nodemailer';
 import { config } from '../config.js';
 import { query } from '../db/pool.js';
@@ -44,6 +45,10 @@ const transporter = config.smtpEnabled
       port: config.SMTP_PORT,
       secure: config.SMTP_SECURE,
       auth: config.SMTP_USER ? { user: config.SMTP_USER, pass: config.SMTP_PASS } : undefined,
+      // Fail fast instead of nodemailer's 2-minute defaults if the SMTP server is unreachable.
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 20_000,
     })
   : null;
 
@@ -120,7 +125,10 @@ export async function sendEmail(input: SendEmailInput): Promise<EmailLog> {
   return rows[0]!;
 }
 
-/** Fire-and-forget variant for emails that must not delay or fail an HTTP response. */
+/**
+ * Sends after the HTTP response, so the visitor doesn't wait on SMTP. On Vercel,
+ * waitUntil keeps the function alive until the email is sent; elsewhere it's a no-op.
+ */
 export function sendEmailInBackground(input: SendEmailInput) {
-  sendEmail(input).catch((err) => console.error(`Could not record "${input.kind}" email:`, err));
+  waitUntil(sendEmail(input).catch((err) => console.error(`Could not record "${input.kind}" email:`, err)));
 }
