@@ -1,8 +1,9 @@
 import React from 'react';
 import { Star, TrendingUp, ShieldCheck, Check } from 'lucide-react';
+import { PackageType } from '../types';
 
 interface ProcessTimelineProps {
-  onStartProject: (packageType?: 'landing' | 'mvp' | 'full-app') => void;
+  onStartProject: (packageType: PackageType) => void;
 }
 
 export const ProcessTimeline: React.FC<ProcessTimelineProps> = ({ onStartProject }) => {

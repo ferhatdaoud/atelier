@@ -15,12 +15,6 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onStartProject }) => {
         backgroundSize: 'cover'
       }}
     >
-      {/* Subtle darkening overlay for text contrast */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute inset-0 bg-black/40 -z-10" 
-      />
-
       <div className="mx-auto max-w-4xl px-4 text-center">
         <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white font-display tracking-tight leading-tight">
           Start your project

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TemplateItem } from '../types';
-import { X, ArrowRight } from 'lucide-react';
+import { X } from 'lucide-react';
+import { formatPrice } from '../lib/format';
 
 interface TemplateShowcasePageProps {
   template: TemplateItem;
@@ -44,7 +45,7 @@ export const TemplateShowcasePage: React.FC<TemplateShowcasePageProps> = ({ temp
                 <div className="mt-8 flex gap-4">
                     <div className="bg-[#0d0d0d] border border-white/10 rounded-xl p-4">
                         <div className="text-[11px] text-zinc-500 uppercase tracking-widest font-bold">Turnkey Price</div>
-                        <div className="text-xl font-bold text-white mt-1 tabular-nums">{template.turnkeyPrice.toLocaleString()} DA</div>
+                        <div className="text-xl font-bold text-white mt-1 tabular-nums">{formatPrice(template.turnkeyPrice)}</div>
                     </div>
                     <div className="bg-[#0d0d0d] border border-white/10 rounded-xl p-4">
                         <div className="text-[11px] text-zinc-500 uppercase tracking-widest font-bold">Turnaround</div>

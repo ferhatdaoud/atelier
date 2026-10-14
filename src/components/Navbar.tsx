@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
-  onOpenOrderModal: () => void;
   onOpenContact: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal, onOpenContact }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenContact }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (

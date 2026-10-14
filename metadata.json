@@ -1,8 +1,0 @@
-{
-  "name": "Vektora Studio - Fast Startup MVPs & High-Converting Templates",
-  "description": "High-performance web agency building rapid, scalable MVPs for startups and custom templates for doctors, clinics, and modern businesses.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
