@@ -28,7 +28,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onClose }) => {
       setStatus("idle");
     }
   };
-
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-[#080808] text-white">
       {/* Background matching Hero section */}
