@@ -3,11 +3,6 @@ import { z } from 'zod';
 
 dotenv.config({ quiet: true });
 
-const booleanFromEnv = z
-  .enum(['true', 'false', '1', '0', ''])
-  .optional()
-  .transform((value) => value === 'true' || value === '1');
-
 const optionalString = z
   .string()
   .optional()
@@ -27,12 +22,17 @@ const envSchema = z.object({
 
   SESSION_TTL_HOURS: z.coerce.number().positive().default(24 * 7),
 
-  SMTP_HOST: optionalString,
-  SMTP_PORT: z.coerce.number().int().positive().default(587),
-  SMTP_SECURE: booleanFromEnv,
-  SMTP_USER: optionalString,
-  SMTP_PASS: optionalString,
-  MAIL_FROM: z.string().default('KZFR Studio <hello@kzfr.studio>'),
+  // From resend.com/api-keys. Without it, emails are printed to the console instead of sent.
+  RESEND_API_KEY: optionalString,
+  // Must use a domain verified in Resend. onboarding@resend.dev works for testing,
+  // but then Resend only delivers to the email address of your own Resend account.
+  MAIL_FROM: z
+    .string()
+    .trim()
+    .default('KZFR Studio <onboarding@resend.dev>')
+    .refine((value) => /^[^<>]*<[^\s@<>]+@[^\s@<>]+>$|^[^\s@<>]+@[^\s@<>]+$/.test(value), {
+      message: 'must look like "Name <you@yourdomain.com>" or "you@yourdomain.com"',
+    }),
   // Inbox that receives "new contact message / new order" notifications.
   ADMIN_NOTIFY_EMAIL: optionalString,
 });
@@ -52,5 +52,4 @@ export const config = {
   ...parsed.data,
   isProduction: parsed.data.NODE_ENV === 'production',
   corsOrigins: parsed.data.CORS_ORIGIN?.split(',').map((origin) => origin.trim()).filter(Boolean) ?? [],
-  smtpEnabled: Boolean(parsed.data.SMTP_HOST),
 };

@@ -3,7 +3,7 @@
 Express + TypeScript + PostgreSQL API for the KZFR website.
 
 - Stores **contact messages** (Contact page) and **orders / project briefs** (Project Onboarding modal).
-- Sends **emails**: a confirmation to the client, a notification to the studio, and replies written from the admin dashboard. Every email is recorded in the `email_logs` table.
+- Sends **emails** with [Resend](https://resend.com): a confirmation to the client, a notification to the studio, and replies written from the admin dashboard. Every email is recorded in the `email_logs` table.
 - **Admin-only login** for the dashboard at `/admin`. There is no public sign-up; admins are created from the command line.
 
 The same code runs two ways:
@@ -33,49 +33,50 @@ Create the database tables. The database is created too if it doesn't exist yet:
 npm run db:migrate
 ```
 
-Create your admin account. You will be asked for a password (at least 10 characters):
+Create your admin account. It asks for your email, your name (optional) and a password (at least 10 characters, not shown while you type):
 
 ```bash
-npm run create-admin -- --email you@example.com --name "Your Name"
+npm run create-admin
 ```
 
-Running the same command again for an existing email **resets its password** and signs out all of its sessions.
+You can also put the email in the command: `npm run create-admin you@example.com`. Don't add `--email`: in PowerShell, npm takes `--email` as its own option and the script never receives it.
+
+Running it again for an existing email **resets its password** and signs out all of its sessions.
 
 ## Running in development
 
-Use two terminals:
+From the **repo root** (not `backend/`), one command starts both the website and the API:
 
 ```bash
-# Terminal 1: API on http://localhost:4000
-cd backend
-npm run dev
-
-# Terminal 2: website on http://localhost:3000 (from the repo root)
 npm run dev
 ```
 
-Vite forwards every `/api/*` request to the backend, so the website and API share one origin.
+Lines starting with `[web]` come from the website (Vite, port 3000), lines starting with `[api]` from the backend (port 4000). Press Ctrl+C to stop both. `npm run dev:web` and `npm run dev:api` start just one of them.
+
+Vite forwards every `/api/*` request to the backend, so the website and API share one origin. If the browser console or Vite shows `http proxy error ... ECONNREFUSED`, the backend isn't running. Look for an `[api]` error message.
 
 - Website: http://localhost:3000
 - Admin dashboard: http://localhost:3000/admin
 
-## Email
+## Email (Resend)
 
-Without SMTP settings, emails are **printed in the backend terminal** and shown as "Logged (SMTP off)" in the dashboard. Nothing is delivered.
+Emails are sent with [Resend](https://resend.com). Without `RESEND_API_KEY`, they are **printed in the backend terminal** and shown as "Not sent (no API key)" in the dashboard. Nothing is delivered.
 
-To send real emails, fill in the SMTP variables in `backend/.env`. Any provider works (Gmail, Brevo, Resend, Mailgun, SendGrid, Zoho...). Gmail example:
+1. Create an API key at [resend.com/api-keys](https://resend.com/api-keys). "Sending access" is enough.
+2. Verify your domain at [resend.com/domains](https://resend.com/domains): add the DNS records Resend shows you at your domain registrar, then wait until the status is **Verified**.
+3. Set the variables in `backend/.env` (and on Vercel, see below):
 
 ```
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=youraddress@gmail.com
-SMTP_PASS=your-16-char-app-password    # Google Account → Security → App passwords
-MAIL_FROM="KZFR Studio <youraddress@gmail.com>"
-ADMIN_NOTIFY_EMAIL=youraddress@gmail.com
+RESEND_API_KEY=re_xxxxxxxxx
+MAIL_FROM="KZFR Studio <hello@yourdomain.com>"   # must use the verified domain
+ADMIN_NOTIFY_EMAIL=you@yourdomain.com
 ```
 
-At startup the server logs `SMTP ready` or the connection error.
+**Testing before you have a domain:** keep `MAIL_FROM="KZFR Studio <onboarding@resend.dev>"`. Resend then only delivers to the email address of **your own Resend account**. Set `ADMIN_NOTIFY_EMAIL` to that address to receive notifications. Emails to clients will show as **Failed** in the dashboard with Resend's reason until the domain is verified.
+
+Every email is recorded in the dashboard's **Emails** tab. Open one to see the error, if any, and its **Resend ID**, which you can look up at [resend.com/emails](https://resend.com/emails) to see whether it was delivered, bounced or opened. Rate-limit, network and server errors from Resend are retried once automatically.
+
+When the local server starts, it checks the API key and warns you if the `MAIL_FROM` domain isn't verified.
 
 ## API
 
@@ -119,7 +120,7 @@ Any hosted PostgreSQL works (Supabase, Railway...). Add its **pooled** connectio
 
 ### 2. Add the other environment variables
 
-In **Project Settings → Environment Variables**, add the variables from [Email](#email): `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM` and `ADMIN_NOTIFY_EMAIL`. Don't set `NODE_ENV` or `TRUST_PROXY`, because Vercel's defaults are already correct.
+In **Project Settings → Environment Variables**, add the variables from [Email (Resend)](#email-resend): `RESEND_API_KEY`, `MAIL_FROM` and `ADMIN_NOTIFY_EMAIL`. Don't set `NODE_ENV` or `TRUST_PROXY`, because Vercel's defaults are already correct.
 
 ### 3. Create the tables and your admin account (from your computer)
 
@@ -128,7 +129,7 @@ Vercel can't run interactive commands, so run these locally against the producti
 ```bash
 cd backend
 npm run db:migrate
-npm run create-admin -- --email you@example.com --name "Your Name"
+npm run create-admin
 ```
 
 Afterwards, switch `backend/.env` back to your local database.

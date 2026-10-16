@@ -65,6 +65,8 @@ export interface EmailLog {
   body: string;
   status: EmailStatus;
   error: string | null;
+  /** Id of the email in Resend's dashboard (resend.com/emails). */
+  resendId: string | null;
   contactMessageId: number | null;
   orderId: number | null;
   createdAt: string;
@@ -88,7 +90,7 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
 export const EMAIL_STATUS_LABELS: Record<EmailStatus, string> = {
   sent: 'Sent',
   failed: 'Failed',
-  logged: 'Logged (SMTP off)',
+  logged: 'Not sent (no API key)',
 };
 
 export const EMAIL_KIND_LABELS: Record<EmailKind, string> = {
