@@ -67,7 +67,7 @@ export function AdminLayout({ admin, onSignedOut }: { admin: Admin; onSignedOut:
             <StatCard
               label="Failed emails"
               value={stats?.failedEmails}
-              hint="Last 7 days — check SMTP settings if > 0"
+              hint="Last 7 days — see the Emails tab for why"
               alert={Boolean(stats?.failedEmails)}
             />
           </div>

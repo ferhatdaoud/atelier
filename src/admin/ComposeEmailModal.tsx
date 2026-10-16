@@ -88,8 +88,8 @@ export function ComposeEmailModal({
                 <TriangleAlert className="mx-auto h-10 w-10 text-amber-400" />
                 <p className="mt-3 font-semibold">Saved, but not delivered</p>
                 <p className="mx-auto mt-1 max-w-sm text-sm text-zinc-400">
-                  SMTP isn't configured on the server, so the email was printed to the backend console instead. Set the SMTP_* variables in
-                  backend/.env to send real emails.
+                  RESEND_API_KEY isn't set on the server, so the email was printed to the backend console instead. Add it to backend/.env
+                  (or to Vercel's environment variables) to send real emails.
                 </p>
               </>
             )}

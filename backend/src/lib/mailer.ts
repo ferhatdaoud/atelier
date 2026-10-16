@@ -1,5 +1,7 @@
+import { randomUUID } from 'node:crypto';
+import { setTimeout as sleep } from 'node:timers/promises';
 import { waitUntil } from '@vercel/functions';
-import nodemailer from 'nodemailer';
+import { Resend, type CreateEmailOptions } from 'resend';
 import { config } from '../config.js';
 import { query } from '../db/pool.js';
 
@@ -30,85 +32,150 @@ export interface EmailLog {
   body: string;
   status: EmailStatus;
   error: string | null;
+  resendId: string | null;
   contactMessageId: number | null;
   orderId: number | null;
   createdAt: Date;
 }
 
 export const EMAIL_LOG_COLUMNS = `
-  id, kind, to_email AS "toEmail", subject, body, status, error,
+  id, kind, to_email AS "toEmail", subject, body, status, error, resend_id AS "resendId",
   contact_message_id AS "contactMessageId", order_id AS "orderId", created_at AS "createdAt"`;
 
-const transporter = config.smtpEnabled
-  ? nodemailer.createTransport({
-      host: config.SMTP_HOST,
-      port: config.SMTP_PORT,
-      secure: config.SMTP_SECURE,
-      auth: config.SMTP_USER ? { user: config.SMTP_USER, pass: config.SMTP_PASS } : undefined,
-      // Fail fast instead of nodemailer's 2-minute defaults if the SMTP server is unreachable.
-      connectionTimeout: 10_000,
-      greetingTimeout: 10_000,
-      socketTimeout: 20_000,
-    })
-  : null;
+const resend = config.RESEND_API_KEY ? new Resend(config.RESEND_API_KEY) : null;
 
-/** Network failures can surface as an AggregateError with an empty message (IPv4 + IPv6 attempts). */
-function describeError(err: unknown): string {
-  if (!(err instanceof Error)) return String(err);
-  if (err.message) return err.message;
-  const nested = err instanceof AggregateError ? err.errors.find((e) => e instanceof Error && e.message) : undefined;
-  if (nested) return (nested as Error).message;
-  const code = (err as NodeJS.ErrnoException).code;
-  return code ? `${code} (${config.SMTP_HOST}:${config.SMTP_PORT})` : err.name;
+const SEND_TIMEOUT_MS = 15_000;
+
+type SendResponse = Awaited<ReturnType<Resend['emails']['send']>>;
+
+/** "Name <email>", with the name quoted so commas or brackets in it can't break the address. */
+function formatAddress(email: string, name?: string) {
+  if (!name) return email;
+  return `"${name.replace(/[\r\n]+/g, ' ').replace(/["\\]/g, '\\$&')}" <${email}>`;
 }
 
-export async function verifyMailer() {
-  if (!transporter) {
-    console.warn('SMTP is not configured — emails will be printed to the console instead of being sent.');
-    return;
-  }
+/** The SDK has no request timeout, so race it against one. */
+async function sendWithTimeout(client: Resend, payload: CreateEmailOptions, idempotencyKey: string): Promise<SendResponse> {
+  let timer: NodeJS.Timeout | undefined;
+  const timeout = new Promise<SendResponse>((resolve) => {
+    timer = setTimeout(
+      () =>
+        resolve({
+          data: null,
+          error: { name: 'application_error', statusCode: null, message: `No response from Resend after ${SEND_TIMEOUT_MS / 1000}s.` },
+          headers: null,
+        }),
+      SEND_TIMEOUT_MS,
+    );
+  });
   try {
-    await transporter.verify();
-    console.log(`SMTP ready (${config.SMTP_HOST}:${config.SMTP_PORT}).`);
-  } catch (err) {
-    console.error(`SMTP connection failed: ${describeError(err)}`);
+    return await Promise.race([client.emails.send(payload, { idempotencyKey }), timeout]);
+  } finally {
+    clearTimeout(timer);
   }
 }
 
 /**
- * Sends an email (or prints it when SMTP isn't configured) and records the
- * attempt in email_logs. Never throws for delivery errors — check `status`.
+ * Sends through Resend, retrying once on rate limits, server/network errors and
+ * timeouts. The retry reuses the idempotency key, so Resend never sends twice.
+ */
+async function deliver(client: Resend, input: SendEmailInput): Promise<{ resendId: string | null; error: string | null }> {
+  const payload: CreateEmailOptions = {
+    from: config.MAIL_FROM,
+    to: formatAddress(input.to, input.toName),
+    replyTo: input.replyTo,
+    subject: input.subject,
+    html: input.html,
+    text: input.text,
+    tags: [{ name: 'kind', value: input.kind }],
+  };
+  const idempotencyKey = `${input.kind}-${randomUUID()}`;
+
+  for (let attempt = 1; ; attempt++) {
+    const res = await sendWithTimeout(client, payload, idempotencyKey);
+    if (res.error === null) return { resendId: res.data.id, error: null };
+
+    const { error } = res;
+    const retryable = error.name === 'rate_limit_exceeded' || error.statusCode === null || error.statusCode >= 500;
+    if (!retryable || attempt === 2) return { resendId: null, error: error.message };
+
+    const retryAfterSeconds = Number(res.headers?.['retry-after']);
+    await sleep(retryAfterSeconds > 0 ? Math.min(retryAfterSeconds * 1000, 5000) : 1000);
+  }
+}
+
+/** Startup check (standalone server only): is the API key valid and the MAIL_FROM domain verified? */
+export async function verifyMailer() {
+  if (!resend) {
+    console.warn('RESEND_API_KEY is not set: emails will be printed to the console instead of being sent.');
+    return;
+  }
+
+  const fromDomain = config.MAIL_FROM.match(/@([^\s@>]+)>?$/)?.[1]?.toLowerCase();
+  if (fromDomain === 'resend.dev') {
+    console.warn(
+      'MAIL_FROM uses resend.dev: Resend only delivers to your own account email until you verify a domain at resend.com/domains.',
+    );
+  }
+
+  // A plain request rather than the SDK: in development the SDK prints every API error,
+  // including the expected "restricted key" answer below, which looks like a failure.
+  const baseUrl = process.env.RESEND_BASE_URL ?? 'https://api.resend.com';
+  const res = await fetch(`${baseUrl}/domains`, {
+    headers: { Authorization: `Bearer ${config.RESEND_API_KEY}` },
+    signal: AbortSignal.timeout(10_000),
+  }).catch(() => null);
+  if (!res) {
+    console.error('Resend API key check failed: could not reach api.resend.com.');
+    return;
+  }
+  const body = (await res.json().catch(() => ({}))) as {
+    name?: string;
+    message?: string;
+    data?: { name: string; status: string }[];
+  };
+  if (!res.ok) {
+    // A "sending access" key can't list domains, which still proves the key works.
+    if (body.name === 'restricted_api_key') console.log('Resend ready (sending-only API key).');
+    else console.error(`Resend API key check failed: ${body.message ?? `HTTP ${res.status}`}`);
+    return;
+  }
+  if (fromDomain === 'resend.dev') return;
+
+  const domain = body.data?.find((d) => d.name.toLowerCase() === fromDomain);
+  if (domain?.status === 'verified') {
+    console.log(`Resend ready (sending from ${fromDomain}).`);
+  } else {
+    console.warn(
+      `Resend: the MAIL_FROM domain "${fromDomain}" is ${domain ? domain.status : 'not added'} in Resend. ` +
+        'Emails will fail until it is verified at resend.com/domains.',
+    );
+  }
+}
+
+/**
+ * Sends an email (or prints it when RESEND_API_KEY isn't set) and records the
+ * attempt in email_logs. Never throws for delivery errors: check `status`.
  */
 export async function sendEmail(input: SendEmailInput): Promise<EmailLog> {
   let status: EmailStatus;
   let error: string | null = null;
+  let resendId: string | null = null;
 
-  if (!transporter) {
+  if (!resend) {
     status = 'logged';
     console.log(
-      `\n--- Email (not sent, SMTP disabled) ---\nTo: ${input.to}\nSubject: ${input.subject}\n\n${input.text}\n--------------------------------------\n`,
+      `\n--- Email (not sent: RESEND_API_KEY is not set) ---\nTo: ${input.to}\nSubject: ${input.subject}\n\n${input.text}\n--------------------------------------\n`,
     );
   } else {
-    try {
-      await transporter.sendMail({
-        from: config.MAIL_FROM,
-        to: input.toName ? { name: input.toName, address: input.to } : input.to,
-        replyTo: input.replyTo,
-        subject: input.subject,
-        text: input.text,
-        html: input.html,
-      });
-      status = 'sent';
-    } catch (err) {
-      status = 'failed';
-      error = describeError(err);
-      console.error(`Failed to send "${input.kind}" email to ${input.to}: ${error}`);
-    }
+    ({ resendId, error } = await deliver(resend, input));
+    status = error ? 'failed' : 'sent';
+    if (error) console.error(`Failed to send "${input.kind}" email to ${input.to}: ${error}`);
   }
 
   const { rows } = await query<EmailLog>(
-    `INSERT INTO email_logs (kind, to_email, subject, body, status, error, contact_message_id, order_id, sent_by_admin_id)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    `INSERT INTO email_logs (kind, to_email, subject, body, status, error, resend_id, contact_message_id, order_id, sent_by_admin_id)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
      RETURNING ${EMAIL_LOG_COLUMNS}`,
     [
       input.kind,
@@ -117,6 +184,7 @@ export async function sendEmail(input: SendEmailInput): Promise<EmailLog> {
       input.text,
       status,
       error,
+      resendId,
       input.contactMessageId ?? null,
       input.orderId ?? null,
       input.sentByAdminId ?? null,
@@ -126,7 +194,7 @@ export async function sendEmail(input: SendEmailInput): Promise<EmailLog> {
 }
 
 /**
- * Sends after the HTTP response, so the visitor doesn't wait on SMTP. On Vercel,
+ * Sends after the HTTP response, so the visitor doesn't wait on Resend. On Vercel,
  * waitUntil keeps the function alive until the email is sent; elsewhere it's a no-op.
  */
 export function sendEmailInBackground(input: SendEmailInput) {

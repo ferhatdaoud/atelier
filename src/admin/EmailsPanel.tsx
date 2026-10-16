@@ -83,6 +83,11 @@ function EmailRow({ email, showKind = false }: { email: EmailLog; showKind?: boo
         <div className="border-t border-white/5 px-4 py-3">
           {email.error && <p className="mb-2 text-xs text-red-300">Error: {email.error}</p>}
           <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-zinc-300">{email.body}</pre>
+          {email.resendId && (
+            <p className="mt-3 text-[11px] text-zinc-500">
+              Resend ID: <span className="select-all font-mono">{email.resendId}</span>
+            </p>
+          )}
         </div>
       )}
     </div>
